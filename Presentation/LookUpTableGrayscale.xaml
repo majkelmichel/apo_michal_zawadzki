@@ -1,0 +1,25 @@
+﻿<Window x:Class="Presentation.LookUpTableGrayscale"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Presentation"
+        mc:Ignorable="d"
+        Title="LookUpTableGrayscale" Height="450" Width="800" d:DataContext="{d:DesignInstance }">
+        <ScrollViewer>
+                <ItemsControl x:Name="LutItemsControl" ItemsSource="{Binding DisplayRows}">
+                        <ItemsControl.ItemTemplate>
+                                <DataTemplate>
+                                        <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                                </Grid.ColumnDefinitions>
+                                                <TextBlock Grid.Column="0" Text="{Binding Index}"></TextBlock>
+                                                <TextBlock Grid.Column="1" Text="{Binding Intensity}"></TextBlock>
+                                        </Grid>
+                                </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                </ItemsControl>
+        </ScrollViewer>
+</Window>

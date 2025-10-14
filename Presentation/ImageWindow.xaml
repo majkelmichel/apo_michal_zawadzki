@@ -1,0 +1,18 @@
+﻿<Window x:Class="Presentation.ImageWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Presentation"
+        mc:Ignorable="d"
+        Title="ImageWindow" Height="450" Width="800">
+    <DockPanel>
+        <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_View" x:Name="Menu">
+                <MenuItem Header="_Resize to original" Click="ResizeToOriginal" />
+                <MenuItem Header="Calculate _LUT" Click="CalculateLut" />
+            </MenuItem>
+        </Menu>
+        <Image x:Name="PreviewImage" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" />
+    </DockPanel>
+</Window>
