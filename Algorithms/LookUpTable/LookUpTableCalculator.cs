@@ -1,5 +1,6 @@
 ﻿using OpenCvSharp;
 using System.Drawing;
+using Algorithms.LookUpTable;
 using OpenCvSharp.Extensions;
 
 namespace Algorithms;

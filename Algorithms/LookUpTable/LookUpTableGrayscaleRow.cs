@@ -1,6 +1,6 @@
-﻿namespace Algorithms;
+﻿namespace Algorithms.LookUpTable;
 
 public class LookUpTableGrayscaleRow
 {
-    public byte Intensity { get; set; }  
+    public byte Intensity { get; init; }  
 }

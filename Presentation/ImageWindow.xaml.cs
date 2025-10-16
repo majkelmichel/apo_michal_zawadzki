@@ -4,6 +4,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Algorithms;
+using Algorithms.Binary;
 using Microsoft.Win32;
 using Presentation.WindowManagement;
 
@@ -92,5 +93,12 @@ public partial class ImageWindow
         
         var histogramWindow = new HistogramWindow(bitmapSource);
         histogramWindow.Show();
+    }
+
+    private void Negation(object sender, RoutedEventArgs e)
+    {
+        var result = BinaryOperations.ApplyNegation(_windowModel.Image);
+        _windowModel.Image = result;
+        LoadImage();
     }
 }

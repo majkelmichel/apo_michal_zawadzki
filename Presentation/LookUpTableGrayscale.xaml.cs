@@ -6,7 +6,7 @@ public partial class LookUpTableGrayscale : Window
 {
     public IEnumerable<LutRowViewModel> DisplayRows { get; set; }
     
-    public LookUpTableGrayscale(Algorithms.LookUpTableGrayscale lut)
+    public LookUpTableGrayscale(Algorithms.LookUpTable.LookUpTableGrayscale lut)
     {
         DisplayRows = lut.Rows.Select((row, index) => new LutRowViewModel
         {

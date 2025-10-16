@@ -1,6 +1,6 @@
-﻿namespace Algorithms;
+﻿namespace Algorithms.LookUpTable;
 
 public class LookUpTableColor
 {
-    public required LookUpTableColorRow[] Rows { get; set; }
+    public required LookUpTableColorRow[] Rows { get; init; }
 }

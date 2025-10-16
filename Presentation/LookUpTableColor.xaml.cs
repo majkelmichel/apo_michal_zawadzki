@@ -5,7 +5,7 @@ namespace Presentation;
 public partial class LookUpTableColor : Window
 {
     public IEnumerable<LutRowViewModel> DisplayRows { get; set; }
-    public LookUpTableColor(Algorithms.LookUpTableColor lut)
+    public LookUpTableColor(Algorithms.LookUpTable.LookUpTableColor lut)
     {
         DisplayRows = lut.Rows.Select((row, index) => new LutRowViewModel
         {

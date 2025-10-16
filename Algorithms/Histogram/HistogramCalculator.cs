@@ -51,15 +51,17 @@ public static class HistogramCalculator
 
         var min = 0;
         var max = 255;
-        for (var i = 0; i > 256; i++)
+        for (var i = 0; i < 256; i++)
         {
-            if (frequencies[i] > 0) min = i;
+            if (frequencies[i] <= 0) continue;
+            min = i;
             break;
         }
 
         for (var i = 255; i >= 0; i--)
         {
-            if (frequencies[i] > 0) max = i;
+            if (frequencies[i] <= 0) continue;
+            max = i;
             break;
         }
 

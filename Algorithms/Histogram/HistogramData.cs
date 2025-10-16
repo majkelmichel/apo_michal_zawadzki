@@ -2,11 +2,11 @@
 
 public class HistogramData
 {
-    public int[] Frequencies { get; set; }
-    public double Mean { get; set; }
-    public double StandardDeviation { get; set; }
-    public double Median { get; set; }
-    public int Max { get; set; }
-    public int Min { get; set; }
-    public int TotalPixels { get; set; }
+    public int[] Frequencies { get; init; } = [];
+    public double Mean { get; init; }
+    public double StandardDeviation { get; init; }
+    public double Median { get; init; }
+    public int Max { get; init; }
+    public int Min { get; init; }
+    public int TotalPixels { get; init; }
 }

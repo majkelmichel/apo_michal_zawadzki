@@ -3,7 +3,7 @@ using System.Drawing.Imaging;
 
 namespace Algorithms;
 
-public class ColorDepth
+public static class ColorDepth
 {
     public static bool IsGrayscale(Bitmap bitmap)
     {
