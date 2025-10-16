@@ -5,21 +5,32 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:Presentation"
         mc:Ignorable="d"
-        Title="LookUpTableGrayscale" Height="450" Width="800" d:DataContext="{d:DesignInstance }">
+        Title="LookUpTableGrayscale" Height="450" Width="200" d:DataContext="{d:DesignInstance local:LookUpTableGrayscale}">
         <ScrollViewer>
-                <ItemsControl x:Name="LutItemsControl" ItemsSource="{Binding DisplayRows}">
-                        <ItemsControl.ItemTemplate>
-                                <DataTemplate>
-                                        <Grid>
-                                                <Grid.ColumnDefinitions>
-                                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                                        <ColumnDefinition Width="*"></ColumnDefinition>
-                                                </Grid.ColumnDefinitions>
-                                                <TextBlock Grid.Column="0" Text="{Binding Index}"></TextBlock>
-                                                <TextBlock Grid.Column="1" Text="{Binding Intensity}"></TextBlock>
-                                        </Grid>
-                                </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                </ItemsControl>
+                <StackPanel>
+                        
+                        <Grid Background="LightGray" Margin="0,0,0,5">
+                                <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                        <ColumnDefinition Width="*"></ColumnDefinition>
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Grid.Column="0" Text="Index" FontWeight="Bold" />
+                                <TextBlock Grid.Column="1" Text="Intensity" FontWeight="Bold" />
+                        </Grid>
+                        <ItemsControl x:Name="LutItemsControl" ItemsSource="{Binding DisplayRows}">
+                                <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                                <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                                <ColumnDefinition Width="*"></ColumnDefinition>
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Grid.Column="0" Text="{Binding Index}"></TextBlock>
+                                                        <TextBlock Grid.Column="1" Text="{Binding Intensity}"></TextBlock>
+                                                </Grid>
+                                        </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                </StackPanel>
         </ScrollViewer>
 </Window>

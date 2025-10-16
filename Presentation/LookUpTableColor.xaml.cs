@@ -2,25 +2,28 @@
 
 namespace Presentation;
 
-public partial class LookUpTableGrayscale : Window
+public partial class LookUpTableColor : Window
 {
     public IEnumerable<LutRowViewModel> DisplayRows { get; set; }
-    
-    public LookUpTableGrayscale(Algorithms.LookUpTableGrayscale lut)
+    public LookUpTableColor(Algorithms.LookUpTableColor lut)
     {
         DisplayRows = lut.Rows.Select((row, index) => new LutRowViewModel
         {
             Index = (byte)index,
-            Intensity = row.Intensity
+            Red = row.Red,
+            Green = row.Green,
+            Blue = row.Blue
         });
         InitializeComponent();
         DataContext = this;
         Owner = Application.Current.MainWindow;
     }
-    
+
     public class LutRowViewModel
     {
         public byte Index { get; set; }
-        public byte Intensity { get; set; }
+        public byte Red { get; set; }
+        public byte Green { get; set; }
+        public byte Blue { get; set; }
     }
 }

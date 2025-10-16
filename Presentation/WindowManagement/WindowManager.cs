@@ -1,4 +1,6 @@
-﻿namespace Presentation;
+﻿using System.Drawing;
+
+namespace Presentation.WindowManagement;
 
 public class WindowManager
 {
@@ -17,9 +19,11 @@ public class WindowManager
         return manager;
     }
     
-    public void AddWindow(ManagedWindow managedWindow)
+    public ManagedWindow AddWindow(string title, Bitmap bitmap)
     {
+        var managedWindow = new ManagedWindow(title, false, bitmap);
         Windows.Add(managedWindow);
+        return managedWindow;
     }
 
     public void RemoveWindow(Guid id)

@@ -8,9 +8,14 @@
         Title="ImageWindow" Height="450" Width="800">
     <DockPanel>
         <Menu DockPanel.Dock="Top">
+            <MenuItem Header="_File">
+                <MenuItem Header="_Save" />
+                <MenuItem Header="_Duplicate" Click="DuplicateImage" />
+            </MenuItem>
             <MenuItem Header="_View" x:Name="Menu">
                 <MenuItem Header="_Resize to original" Click="ResizeToOriginal" />
                 <MenuItem Header="Calculate _LUT" Click="CalculateLut" />
+                <MenuItem Header="Show _Histogram" Click="ShowHistogram" />
             </MenuItem>
         </Menu>
         <Image x:Name="PreviewImage" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" />

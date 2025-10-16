@@ -3,6 +3,7 @@ using System.IO;
 using System.Windows;
 using System.Windows.Input;
 using Microsoft.Win32;
+using Presentation.WindowManagement;
 
 namespace Presentation;
 
@@ -11,17 +12,15 @@ namespace Presentation;
 /// </summary>
 public partial class MainWindow : Window
 {
-    private readonly WindowManager _manager;
     
     public MainWindow()
     {
         InitializeComponent();
-        _manager = WindowManager.GetInstance();
     }
 
-    private async void OnOpenImage(object sender, RoutedEventArgs e) => await OpenImageAsync();
-    
-    private async Task OpenImageAsync()
+    private void OnOpenImage(object sender, RoutedEventArgs e) => OpenImageAsync();
+
+    private static void OpenImageAsync()
     {
         var dialog = new OpenFileDialog
         {
@@ -30,38 +29,23 @@ public partial class MainWindow : Window
             Multiselect = false
         };
 
-        if (dialog.ShowDialog() == true)
-        {
-            var filePath = dialog.FileName;
-            var fileName = Path.GetFileName(filePath);
+        if (dialog.ShowDialog() != true) return;
+        var filePath = dialog.FileName;
+        var fileName = Path.GetFileName(filePath);
+        var bitmap = new Bitmap(filePath);
+        var manager = WindowManager.GetInstance();
 
-            await Task.Run(() =>
-            {
-                var bitmap = new Bitmap(filePath);
-                var window = new ManagedWindow(
-                    fileName,
-                    bitmap.Width,
-                    bitmap.Height,
-                    false,
-                    bitmap);
+        var window = manager.AddWindow(fileName, bitmap);
 
-                _manager.AddWindow(window);
-
-                Dispatcher.Invoke(() =>
-                {
-                    var imageWindow = new ImageWindow(window);
-                    imageWindow.Closed += (_, _) => _manager.RemoveWindow(window.Id);
-                    imageWindow.Show();
-                });
-            });
-        }
+        var imageWindow = new ImageWindow(window);
+        imageWindow.Show();
     }
-    
+
     protected override void OnPreviewKeyDown(KeyEventArgs e)
     {
         if (e.Key == Key.O && Keyboard.Modifiers == ModifierKeys.Control)
         {
-            _ = OpenImageAsync();
+            OpenImageAsync();
             e.Handled = true;
         }
         base.OnPreviewKeyDown(e);
