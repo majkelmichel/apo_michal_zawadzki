@@ -11,15 +11,17 @@
             <MenuItem Header="_File">
                 <MenuItem Header="_Save" Click="SaveImage" />
                 <MenuItem Header="_Duplicate" Click="DuplicateImage" />
-            </MenuItem>
-            <MenuItem Header="_View" x:Name="Menu">
                 <MenuItem Header="_Resize to original" Click="ResizeToOriginal" />
+            </MenuItem>
+            <MenuItem Header="_Analyze" x:Name="Menu">
                 <MenuItem Header="Calculate _LUT" Click="CalculateLut" />
                 <MenuItem Header="Show _Histogram" Click="ShowHistogram" />
             </MenuItem>
-            <MenuItem Header="_Binary">
-                <MenuItem Header="_Negation" Click="Negation"/>
+            <MenuItem Header="_Point">
+                <MenuItem Header="_Negation" Click="Negation" />
                 <MenuItem Header="_Reduce gray levels" Click="ReduceGrayLevels" />
+                <MenuItem Header="_Binary Threshold" Click="BinaryThreshold" />
+                <MenuItem Header="_Grayscale Threshold" Click="GrayscaleThreshold" />
             </MenuItem>
         </Menu>
         <Image x:Name="PreviewImage" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" />

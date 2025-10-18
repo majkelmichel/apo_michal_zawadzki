@@ -143,4 +143,22 @@ public partial class ImageWindow
         _windowModel.Image = reduceGrayLevelsWindow.Image;
         LoadImage();
     }
+    
+    private void BinaryThreshold(object sender, RoutedEventArgs e)
+    {
+        var binaryThresholdWindow = new BinaryThreshold((Bitmap)_windowModel.Image.Clone());
+        binaryThresholdWindow.ShowDialog();
+        
+        _windowModel.Image = binaryThresholdWindow.Image;
+        LoadImage();
+    }
+
+    private void GrayscaleThreshold(object sender, RoutedEventArgs e)
+    {
+        var grayscaleThresholdWindow = new GrayscaleThreshold((Bitmap)_windowModel.Image.Clone());
+        grayscaleThresholdWindow.ShowDialog();
+        
+        _windowModel.Image = grayscaleThresholdWindow.Image;
+        LoadImage();
+    }
 }

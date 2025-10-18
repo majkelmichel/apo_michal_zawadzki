@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace Algorithms.Point;
 
@@ -48,6 +49,44 @@ public class PointOperations
                 var negated = 255 - pixel.R;
                 
                 result.SetPixel(x, y, Color.FromArgb(negated, negated, negated));
+            }
+        }
+        
+        return result;
+    }
+
+    public static Bitmap BinaryThreshold(Bitmap bitmap, byte threshold)
+    {
+        var result = new Bitmap(bitmap.Height, bitmap.Height);
+
+        for (var y = 0; y < bitmap.Height; y++)
+        {
+            for (var x = 0; x < bitmap.Width; x++)
+            {
+                var pixel = bitmap.GetPixel(x, y);
+                
+                var newPixel = pixel.R > threshold ? 255 : 0;
+                
+                result.SetPixel(x, y, Color.FromArgb(newPixel, newPixel, newPixel));
+            }
+        }
+
+        return result;
+    }
+    
+    public static Bitmap GrayscaleThreshold(Bitmap bitmap, byte threshold)
+    {
+        var result = new Bitmap(bitmap.Height, bitmap.Height);
+        
+        for (var y = 0; y < bitmap.Height; y++)
+        {
+            for (var x = 0; x < bitmap.Width; x++)
+            {
+                var pixel = bitmap.GetPixel(x, y);
+                
+                var newPixel = pixel.R > threshold ? pixel.R : 0;
+                
+                result.SetPixel(x, y, Color.FromArgb(newPixel, newPixel, newPixel));
             }
         }
         
