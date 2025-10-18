@@ -9,7 +9,7 @@
     <DockPanel>
         <Menu DockPanel.Dock="Top">
             <MenuItem Header="_File">
-                <MenuItem Header="_Save" />
+                <MenuItem Header="_Save" Click="SaveImage" />
                 <MenuItem Header="_Duplicate" Click="DuplicateImage" />
             </MenuItem>
             <MenuItem Header="_View" x:Name="Menu">
@@ -19,6 +19,7 @@
             </MenuItem>
             <MenuItem Header="_Binary">
                 <MenuItem Header="_Negation" Click="Negation"/>
+                <MenuItem Header="_Reduce gray levels" Click="ReduceGrayLevels" />
             </MenuItem>
         </Menu>
         <Image x:Name="PreviewImage" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" />

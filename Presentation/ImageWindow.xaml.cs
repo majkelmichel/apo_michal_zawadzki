@@ -1,11 +1,13 @@
 ﻿using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using Algorithms;
-using Algorithms.Binary;
+using Algorithms.Point;
 using Microsoft.Win32;
+using Presentation.Point;
 using Presentation.WindowManagement;
 
 namespace Presentation;
@@ -97,8 +99,48 @@ public partial class ImageWindow
 
     private void Negation(object sender, RoutedEventArgs e)
     {
-        var result = BinaryOperations.ApplyNegation(_windowModel.Image);
+        var result = PointOperations.ApplyNegation(_windowModel.Image);
         _windowModel.Image = result;
+        LoadImage();
+    }
+
+    private void SaveImage(object sender, RoutedEventArgs e)
+    {
+        var dialog = new SaveFileDialog
+        {
+            Title = "Save image",
+            Filter = "PNG Image|*.png|JPG Image|*.jpg;*.jpeg|Bitmap Image|*.bmp|TIFF Image|*.tiff"
+        };
+
+        dialog.ShowDialog();
+
+        if (dialog.FileName == "") return;
+        var fs = new FileStream(dialog.FileName, FileMode.Create);
+
+        switch (dialog.FilterIndex)
+        {
+            case 1:
+                _windowModel.Image.Save(fs, ImageFormat.Png);
+                break;
+            case 2:
+                _windowModel.Image.Save(fs, ImageFormat.Jpeg);
+                break;
+            case 3:
+                _windowModel.Image.Save(fs, ImageFormat.Bmp);
+                break;
+            case 4:
+                _windowModel.Image.Save(fs, ImageFormat.Tiff);
+                break;
+        }
+        fs.Close();
+    }
+
+    private void ReduceGrayLevels(object sender, RoutedEventArgs e)
+    {
+        var reduceGrayLevelsWindow = new ReduceGrayLevels((Bitmap)_windowModel.Image.Clone());
+        reduceGrayLevelsWindow.ShowDialog();
+        
+        _windowModel.Image = reduceGrayLevelsWindow.Image;
         LoadImage();
     }
 }
