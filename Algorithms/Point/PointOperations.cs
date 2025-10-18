@@ -5,11 +5,6 @@ namespace Algorithms.Point;
 
 public class PointOperations
 {
-    public static Bitmap AddImages(Bitmap[] images, bool saturate = false)
-    {
-        return images[0]; // TODO:
-    }
-    
     public static Bitmap ReduceGrayLevels(Bitmap bitmap, byte grayLevels)
     {
         var result = new Bitmap(bitmap.Width, bitmap.Height);

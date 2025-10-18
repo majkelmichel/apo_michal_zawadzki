@@ -8,6 +8,7 @@ using Algorithms;
 using Algorithms.Point;
 using Microsoft.Win32;
 using Presentation.Point;
+using Presentation.Point.Math;
 using Presentation.WindowManagement;
 
 namespace Presentation;
@@ -159,6 +160,15 @@ public partial class ImageWindow
         grayscaleThresholdWindow.ShowDialog();
         
         _windowModel.Image = grayscaleThresholdWindow.Image;
+        LoadImage();
+    }
+
+    private void AddImages(object sender, RoutedEventArgs e)
+    {
+        var addImagesWindow = new AddImages(_windowModel);
+        addImagesWindow.ShowDialog();
+        
+        _windowModel.Image = addImagesWindow.Image;
         LoadImage();
     }
 }

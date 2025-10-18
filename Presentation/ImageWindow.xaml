@@ -22,6 +22,9 @@
                 <MenuItem Header="_Reduce gray levels" Click="ReduceGrayLevels" />
                 <MenuItem Header="_Binary Threshold" Click="BinaryThreshold" />
                 <MenuItem Header="_Grayscale Threshold" Click="GrayscaleThreshold" />
+                <MenuItem Header="_Math">
+                    <MenuItem Header="_Add images" Click="AddImages"></MenuItem>
+                </MenuItem>
             </MenuItem>
         </Menu>
         <Image x:Name="PreviewImage" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" />
