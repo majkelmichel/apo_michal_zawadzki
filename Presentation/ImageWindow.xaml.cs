@@ -3,6 +3,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Algorithms;
 using Algorithms.Point;
@@ -36,7 +37,7 @@ public partial class ImageWindow
         try
         {
             using var memory = new MemoryStream();
-            _windowModel.Image.Save(memory, System.Drawing.Imaging.ImageFormat.Png);
+            _windowModel.Image.Save(memory, ImageFormat.Png);
             memory.Position = 0;
 
             var bitmapImage = new BitmapImage();
@@ -63,17 +64,26 @@ public partial class ImageWindow
     private async void CalculateLut(object sender, RoutedEventArgs e)
     {
         var isGrayScale = ColorDepth.IsGrayscale(_windowModel.Image);
+        var bitmap = _windowModel.Image.ToBitmapSource();
+        
+        var width = _windowModel.Image.Width;
+        var height = _windowModel.Image.Height;
+        var stride = (width * bitmap.Format.BitsPerPixel + 7) / 8;
+        var pixels = new byte[stride * height];
+        bitmap.CopyPixels(pixels, stride, 0);
+        
+        var bytesPerPixel = (bitmap.Format.BitsPerPixel + 7) / 8;
 
         if (isGrayScale)
         {
-            var lut = await LookUpTableCalculator.CalculateGrayscale(_windowModel.Image);
+            var lut = LookUpTableCalculator.CalculateGrayscale(pixels, bytesPerPixel);
 
             var lutWindow = new LookUpTableGrayscale(lut);
             lutWindow.Show();
         }
         else
         {
-            var lut = await LookUpTableCalculator.CalculateColor(_windowModel.Image);
+            var lut = LookUpTableCalculator.CalculateColor(pixels, bytesPerPixel);
             
             var lutWindow = new LookUpTableColor(lut);
             lutWindow.Show();
@@ -92,9 +102,7 @@ public partial class ImageWindow
 
     private void ShowHistogram(object sender, RoutedEventArgs e)
     {
-        var bitmapSource = _windowModel.Image.ToBitmapSource();
-        
-        var histogramWindow = new HistogramWindow(bitmapSource);
+        var histogramWindow = new HistogramWindow(_windowModel);
         histogramWindow.Show();
     }
 

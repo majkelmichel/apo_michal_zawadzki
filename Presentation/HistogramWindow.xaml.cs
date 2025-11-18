@@ -1,34 +1,42 @@
-﻿using System.Windows;
+﻿using System.Drawing;
+using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using Algorithms.Histogram;
+using Presentation.WindowManagement;
+using Brushes = System.Windows.Media.Brushes;
+using Color = System.Drawing.Color;
+using PixelFormat = System.Drawing.Imaging.PixelFormat;
+using Rectangle = System.Windows.Shapes.Rectangle;
 
 namespace Presentation;
 
 public partial class HistogramWindow : Window
 {
     private HistogramData _histogramData;
+    private readonly ManagedWindow _parentWindow;
     
-    public HistogramWindow(BitmapSource bitmap)
+    public HistogramWindow(ManagedWindow parentWindow)
     {
+        _parentWindow = parentWindow;
+        var bitmapSource = _parentWindow.Image.ToBitmapSource();
         InitializeComponent();
-        var width = bitmap.PixelWidth;
-        var height = bitmap.PixelHeight;
-        var stride = (width * bitmap.Format.BitsPerPixel + 7) / 8;
+        var width = bitmapSource.PixelWidth;
+        var height = bitmapSource.PixelHeight;
+        var stride = (width * bitmapSource.Format.BitsPerPixel + 7) / 8;
         var pixels = new byte[height * stride];
-        bitmap.CopyPixels(pixels, stride, 0);
+        bitmapSource.CopyPixels(pixels, stride, 0);
 
-        var bytesPerPixel = (bitmap.Format.BitsPerPixel + 7) / 8;
+        var bytesPerPixel = (bitmapSource.Format.BitsPerPixel + 7) / 8;
 
-        _histogramData = HistogramCalculator.CalculateGrayscale(pixels, width, height, bytesPerPixel);
+        _histogramData = HistogramCalculator.CalculateGrayscale(pixels, bytesPerPixel);
         
-        Loaded += (sender, args) => LoadHistogram(bitmap);
+        Loaded += (sender, args) => LoadHistogram();
         Owner = Application.Current.MainWindow;
     }
 
-    private void LoadHistogram(BitmapSource bitmap)
+    private void LoadHistogram()
     {
         try
         {
@@ -83,7 +91,7 @@ public partial class HistogramWindow : Window
             {
                 Width = Math.Max(barWidth, 1),
                 Height = barHeight,
-                Fill = new SolidColorBrush(Color.FromRgb((byte)i, (byte)i, (byte)i)),
+                Fill = new SolidColorBrush(System.Windows.Media.Color.FromRgb((byte)i, (byte)i, (byte)i)),
                 Stroke = Brushes.DarkGray,
                 StrokeThickness = 0.5,
             };
@@ -196,5 +204,140 @@ public partial class HistogramWindow : Window
         HistogramCanvas.Children.Add(yLabel);
         Canvas.SetLeft(yLabel, 15);
         Canvas.SetTop(yLabel, margin + chartHeight / 2 + 30);
+    }
+
+    private void StretchHistogram(object sender, RoutedEventArgs e)
+    {
+        var recodingTable = HistogramStretch.CalculateStretch(_histogramData.Frequencies);
+        var bitmap = new Bitmap(_parentWindow.Image.Width, _parentWindow.Image.Height, PixelFormat.Format8bppIndexed);
+        
+        var palette = bitmap.Palette;
+        for (var i = 0; i < 256; i++)
+        {
+            palette.Entries[i] = Color.FromArgb(i, i, i);
+        }
+        bitmap.Palette = palette;
+        
+        var bitmapData = bitmap.LockBits(
+            new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
+            System.Drawing.Imaging.ImageLockMode.WriteOnly,
+            PixelFormat.Format8bppIndexed);
+        
+        try
+        {
+            unsafe
+            {
+                var ptr = (byte*)bitmapData.Scan0;
+                
+                for (var y = 0; y < bitmap.Height; y++)
+                {
+                    for (var x = 0; x < bitmap.Width; x++)
+                    {
+                        var currentPixelValue = _parentWindow.Image.GetPixel(x, y).B;
+                        var newPixelValue = recodingTable[currentPixelValue];
+                        ptr[y * bitmapData.Stride + x] = newPixelValue;
+                    }
+                }
+            }
+        }
+        finally
+        {
+            bitmap.UnlockBits(bitmapData);
+        }
+
+        var manager = WindowManager.GetInstance();
+        var window = manager.AddWindow($"{_parentWindow.Title} stretched", bitmap);
+        var imageWindow = new ImageWindow(window);
+        imageWindow.Show();
+    }
+
+    private void StretchHistogramWithOversaturation(object sender, RoutedEventArgs e)
+    {
+        var recodingTable = HistogramStretch.CalculateStretchWithSaturation(_histogramData.Frequencies);
+        var bitmap = new Bitmap(_parentWindow.Image.Width, _parentWindow.Image.Height, PixelFormat.Format8bppIndexed);
+        
+        var palette = bitmap.Palette;
+        for (var i = 0; i < 256; i++)
+        {
+            palette.Entries[i] = Color.FromArgb(i, i, i);
+        }
+        bitmap.Palette = palette;
+        
+        var bitmapData = bitmap.LockBits(
+            new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
+            System.Drawing.Imaging.ImageLockMode.WriteOnly,
+            PixelFormat.Format8bppIndexed);
+        
+        try
+        {
+            unsafe
+            {
+                var ptr = (byte*)bitmapData.Scan0;
+                
+                for (var y = 0; y < bitmap.Height; y++)
+                {
+                    for (var x = 0; x < bitmap.Width; x++)
+                    {
+                        var currentPixelValue = _parentWindow.Image.GetPixel(x, y).B;
+                        var newPixelValue = recodingTable[currentPixelValue];
+                        ptr[y * bitmapData.Stride + x] = newPixelValue;
+                    }
+                }
+            }
+        }
+        finally
+        {
+            bitmap.UnlockBits(bitmapData);
+        }
+
+        var manager = WindowManager.GetInstance();
+        var window = manager.AddWindow($"{_parentWindow.Title} stretched", bitmap);
+        var imageWindow = new ImageWindow(window);
+        imageWindow.Show();
+    }
+
+    private void Equalize(object sender, RoutedEventArgs e)
+    {
+        var recodingTable = HistogramStretch.Equalize(_histogramData.Frequencies);
+        var bitmap = new Bitmap(_parentWindow.Image.Width, _parentWindow.Image.Height, PixelFormat.Format8bppIndexed);
+        
+        var palette = bitmap.Palette;
+        for (var i = 0; i < 256; i++)
+        {
+            palette.Entries[i] = Color.FromArgb(i, i, i);
+        }
+        bitmap.Palette = palette;
+        
+        var bitmapData = bitmap.LockBits(
+            new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
+            System.Drawing.Imaging.ImageLockMode.WriteOnly,
+            PixelFormat.Format8bppIndexed);
+        
+        try
+        {
+            unsafe
+            {
+                var ptr = (byte*)bitmapData.Scan0;
+                
+                for (var y = 0; y < bitmap.Height; y++)
+                {
+                    for (var x = 0; x < bitmap.Width; x++)
+                    {
+                        var currentPixelValue = _parentWindow.Image.GetPixel(x, y).B;
+                        var newPixelValue = recodingTable[currentPixelValue];
+                        ptr[y * bitmapData.Stride + x] = newPixelValue;
+                    }
+                }
+            }
+        }
+        finally
+        {
+            bitmap.UnlockBits(bitmapData);
+        }
+
+        var manager = WindowManager.GetInstance();
+        var window = manager.AddWindow($"{_parentWindow.Title} stretched", bitmap);
+        var imageWindow = new ImageWindow(window);
+        imageWindow.Show();
     }
 }

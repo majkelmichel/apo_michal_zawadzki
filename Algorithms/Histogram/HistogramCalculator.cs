@@ -1,10 +1,8 @@
-﻿using System.Windows.Media.Imaging;
-
-namespace Algorithms.Histogram;
+﻿namespace Algorithms.Histogram;
 
 public static class HistogramCalculator
 {
-    public static HistogramData CalculateGrayscale(byte[] pixels, int width, int height, int bytesPerPixel)
+    public static HistogramData CalculateGrayscale(byte[] pixels, int bytesPerPixel)
     {
         ArgumentNullException.ThrowIfNull(pixels);
 
