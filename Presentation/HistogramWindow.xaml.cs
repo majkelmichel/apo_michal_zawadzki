@@ -254,41 +254,8 @@ public partial class HistogramWindow : Window
     private void StretchHistogramWithOversaturation(object sender, RoutedEventArgs e)
     {
         var recodingTable = HistogramStretch.CalculateStretchWithSaturation(_histogramData.Frequencies);
-        var bitmap = new Bitmap(_parentWindow.Image.Width, _parentWindow.Image.Height, PixelFormat.Format8bppIndexed);
         
-        var palette = bitmap.Palette;
-        for (var i = 0; i < 256; i++)
-        {
-            palette.Entries[i] = Color.FromArgb(i, i, i);
-        }
-        bitmap.Palette = palette;
-        
-        var bitmapData = bitmap.LockBits(
-            new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
-            System.Drawing.Imaging.ImageLockMode.WriteOnly,
-            PixelFormat.Format8bppIndexed);
-        
-        try
-        {
-            unsafe
-            {
-                var ptr = (byte*)bitmapData.Scan0;
-                
-                for (var y = 0; y < bitmap.Height; y++)
-                {
-                    for (var x = 0; x < bitmap.Width; x++)
-                    {
-                        var currentPixelValue = _parentWindow.Image.GetPixel(x, y).B;
-                        var newPixelValue = recodingTable[currentPixelValue];
-                        ptr[y * bitmapData.Stride + x] = newPixelValue;
-                    }
-                }
-            }
-        }
-        finally
-        {
-            bitmap.UnlockBits(bitmapData);
-        }
+        var bitmap = _parentWindow.Image.Recode(recodingTable);
 
         var manager = WindowManager.GetInstance();
         var window = manager.AddWindow($"{_parentWindow.Title} stretched", bitmap);
@@ -299,45 +266,17 @@ public partial class HistogramWindow : Window
     private void Equalize(object sender, RoutedEventArgs e)
     {
         var recodingTable = HistogramStretch.Equalize(_histogramData.Frequencies);
-        var bitmap = new Bitmap(_parentWindow.Image.Width, _parentWindow.Image.Height, PixelFormat.Format8bppIndexed);
         
-        var palette = bitmap.Palette;
-        for (var i = 0; i < 256; i++)
-        {
-            palette.Entries[i] = Color.FromArgb(i, i, i);
-        }
-        bitmap.Palette = palette;
-        
-        var bitmapData = bitmap.LockBits(
-            new System.Drawing.Rectangle(0, 0, bitmap.Width, bitmap.Height),
-            System.Drawing.Imaging.ImageLockMode.WriteOnly,
-            PixelFormat.Format8bppIndexed);
-        
-        try
-        {
-            unsafe
-            {
-                var ptr = (byte*)bitmapData.Scan0;
-                
-                for (var y = 0; y < bitmap.Height; y++)
-                {
-                    for (var x = 0; x < bitmap.Width; x++)
-                    {
-                        var currentPixelValue = _parentWindow.Image.GetPixel(x, y).B;
-                        var newPixelValue = recodingTable[currentPixelValue];
-                        ptr[y * bitmapData.Stride + x] = newPixelValue;
-                    }
-                }
-            }
-        }
-        finally
-        {
-            bitmap.UnlockBits(bitmapData);
-        }
+        var bitmap = _parentWindow.Image.Recode(recodingTable);
 
         var manager = WindowManager.GetInstance();
         var window = manager.AddWindow($"{_parentWindow.Title} stretched", bitmap);
         var imageWindow = new ImageWindow(window);
         imageWindow.Show();
+    }
+
+    private void BinaryThreshold(object sender, RoutedEventArgs e)
+    {
+        
     }
 }

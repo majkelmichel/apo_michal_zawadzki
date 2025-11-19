@@ -4,6 +4,8 @@ using System.Windows;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using Color = System.Drawing.Color;
+using PixelFormat = System.Drawing.Imaging.PixelFormat;
 
 namespace Presentation;
 
@@ -29,4 +31,45 @@ public static class BitmapExtensions
     [DllImport("gdi32.dll", EntryPoint = "DeleteObject")]
     [return: MarshalAs(UnmanagedType.Bool)]
     private static extern bool DeleteObject([In] IntPtr hObject);
+
+    public static Bitmap Recode(this Bitmap original, byte[] recodingTable)
+    {
+        var bitmap = new Bitmap(original.Width, original.Height, PixelFormat.Format8bppIndexed);
+        
+        var palette = bitmap.Palette;
+        for (var i = 0; i < 256; i++)
+        {
+            palette.Entries[i] = Color.FromArgb(i, i, i);
+        }
+        bitmap.Palette = palette;
+        
+        var bitmapData = bitmap.LockBits(
+            new Rectangle(0, 0, bitmap.Width, bitmap.Height),
+            System.Drawing.Imaging.ImageLockMode.WriteOnly,
+            PixelFormat.Format8bppIndexed);
+        
+        try
+        {
+            unsafe
+            {
+                var ptr = (byte*)bitmapData.Scan0;
+                
+                for (var y = 0; y < bitmap.Height; y++)
+                {
+                    for (var x = 0; x < bitmap.Width; x++)
+                    {
+                        var currentPixelValue = original.GetPixel(x, y).B;
+                        var newPixelValue = recodingTable[currentPixelValue];
+                        ptr[y * bitmapData.Stride + x] = newPixelValue;
+                    }
+                }
+            }
+        }
+        finally
+        {
+            bitmap.UnlockBits(bitmapData);
+        }
+
+        return bitmap;
+    }
 }
