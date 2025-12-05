@@ -32,6 +32,27 @@ public static class BitmapExtensions
     [return: MarshalAs(UnmanagedType.Bool)]
     private static extern bool DeleteObject([In] IntPtr hObject);
 
+    public static byte[] ToPixels(this Bitmap original)
+    {
+        
+        var bitmap = original.ToBitmapSource();
+        
+        var width = original.Width;
+        var height = original.Height;
+        var stride = (width * bitmap.Format.BitsPerPixel + 7) / 8;
+        var pixels = new byte[stride * height];
+        bitmap.CopyPixels(pixels, stride, 0);
+        
+        return pixels;
+    }
+
+    public static int GetBytesPerPixel(this Bitmap original)
+    {
+        var bitmap = original.ToBitmapSource();
+        var bytesPerPixel = (bitmap.Format.BitsPerPixel + 7) / 8;
+        return bytesPerPixel; 
+    }
+    
     public static Bitmap Recode(this Bitmap original, byte[] recodingTable)
     {
         var bitmap = new Bitmap(original.Width, original.Height, PixelFormat.Format8bppIndexed);

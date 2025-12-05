@@ -4,6 +4,7 @@ namespace Algorithms.Point;
 
 public class MathOperations
 {
+    // Lab 2 Zad 1
     public static Bitmap AddImages(Bitmap[] images, bool saturate = false)
     {
         if (!(images.Length > 0)) throw new ArgumentException("Images must be at least 1");
@@ -27,5 +28,49 @@ public class MathOperations
         }
 
         return result;
+    }
+
+    public static Bitmap SubtractImages(Bitmap image1, Bitmap image2)
+    {
+        if (image1.Width != image2.Width || image1.Height != image2.Height) throw new ArgumentException("Images are not of the same size");
+        
+        var result = new Bitmap(image1.Width, image1.Height);
+        
+        for (var y = 0; y < image1.Height; y++)
+        {
+            for (var x = 0; x < image1.Width; x++)
+            {
+                var pixel1 = image1.GetPixel(x, y);
+                var pixel2 = image2.GetPixel(x, y);
+
+                var newPixel = Math.Max(pixel1.R - pixel2.R, 0);
+                
+                result.SetPixel(x, y, Color.FromArgb(newPixel, newPixel, newPixel));
+            }
+        }
+
+        return result;
+    }
+
+    public static class Number
+    {
+        // Lab 2 Zad 1
+        public static byte[] Add(byte value)
+        {
+            return Enumerable.Range(0, 256).Select(i => (byte)Math.Min(255, i + value)).ToArray();
+        }
+
+        // Lab 2 Zad 1
+        public static byte[] Multiply(byte value, bool saturate = false)
+        {
+            // TODO: na czym ma polegać wysycenie?
+            return Enumerable.Range(0, 256).Select(i => (byte)Math.Min(255, i * value)).ToArray();
+        }
+
+        // Lab 2 Zad 1
+        public static byte[] Divide(int value, bool saturate = false)
+        {
+            return Enumerable.Range(0, 256).Select(i => (byte)(i / value)).ToArray();
+        }
     }
 }

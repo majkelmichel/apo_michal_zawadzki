@@ -1,0 +1,32 @@
+﻿<Window x:Class="Presentation.Point.Math.SubtractImages"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Presentation.Point.Math"
+        mc:Ignorable="d"
+        Title="SubtractImages" Height="200" Width="800" d:DataContext="{d:DesignInstance local:SubtractImages}">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="100"></RowDefinition>
+        </Grid.RowDefinitions>
+        <ComboBox Name="SelectImage"
+                  ItemsSource="{Binding Windows}"
+                  Text="Image to subtract"
+                  IsEditable="True"
+                  SelectionChanged="SelectImage_OnSelectionChanged">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+
+        <Button Grid.Row="1" Name="SubmitButton"
+                Content="Submit"
+                Width="100"
+                Height="30"
+                Click="SubmitButton_Click" />
+    </Grid>
+</Window>

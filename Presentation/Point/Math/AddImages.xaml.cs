@@ -47,12 +47,6 @@ public partial class AddImages : Window
         Close();
     }
     
-    public class WindowViewmodel
-    {
-        public required string Title { get; init; }
-        public int Index { get; set; }
-        public required Guid Id { get; set; }
-    }
 
     private void CheckboxChecked(object sender, RoutedEventArgs e)
     {

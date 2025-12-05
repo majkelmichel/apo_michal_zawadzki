@@ -24,6 +24,8 @@
                 <MenuItem Header="_Grayscale Threshold" Click="GrayscaleThreshold" />
                 <MenuItem Header="_Math">
                     <MenuItem Header="_Add images" Click="AddImages"></MenuItem>
+                    <MenuItem Header="Subtract images" Click="SubtractImages"></MenuItem>
+                    <MenuItem Header="Number operations" Click="NumberOperations"></MenuItem>
                 </MenuItem>
             </MenuItem>
         </Menu>

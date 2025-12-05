@@ -61,18 +61,11 @@ public partial class ImageWindow
         WindowState = WindowState.Normal;
     }
 
-    private async void CalculateLut(object sender, RoutedEventArgs e)
+    private void CalculateLut(object sender, RoutedEventArgs e)
     {
         var isGrayScale = ColorDepth.IsGrayscale(_windowModel.Image);
-        var bitmap = _windowModel.Image.ToBitmapSource();
-        
-        var width = _windowModel.Image.Width;
-        var height = _windowModel.Image.Height;
-        var stride = (width * bitmap.Format.BitsPerPixel + 7) / 8;
-        var pixels = new byte[stride * height];
-        bitmap.CopyPixels(pixels, stride, 0);
-        
-        var bytesPerPixel = (bitmap.Format.BitsPerPixel + 7) / 8;
+        var pixels = _windowModel.Image.ToPixels();
+        var bytesPerPixel = _windowModel.Image.GetBytesPerPixel();
 
         if (isGrayScale)
         {
@@ -90,7 +83,7 @@ public partial class ImageWindow
         }
     }
 
-    private async void DuplicateImage(object sender, RoutedEventArgs e)
+    private void DuplicateImage(object sender, RoutedEventArgs e)
     {
         var bitmap = (Bitmap)_windowModel.Image.Clone();
         var manager = WindowManager.GetInstance();
@@ -177,6 +170,24 @@ public partial class ImageWindow
         addImagesWindow.ShowDialog();
         
         _windowModel.Image = addImagesWindow.Image;
+        LoadImage();
+    }
+
+    private void SubtractImages(object sender, RoutedEventArgs e)
+    {
+        var subtractImagesWindow = new SubtractImages(_windowModel);
+        subtractImagesWindow.ShowDialog();
+        
+        _windowModel.Image = subtractImagesWindow.Image;
+        LoadImage();
+    }
+
+    private void NumberOperations(object sender, RoutedEventArgs e)
+    {
+        var numberOperationsWindow = new NumberOperations(_windowModel.Image);
+        numberOperationsWindow.ShowDialog();
+        
+        _windowModel.Image = numberOperationsWindow.Image;
         LoadImage();
     }
 }

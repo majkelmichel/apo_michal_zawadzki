@@ -6,7 +6,7 @@ public static class HistogramStretch
     {
         var min = 0;
         
-        for (int i = 0; i < frequencies.Length; i++)
+        for (var i = 0; i < frequencies.Length; i++)
         {
             if (frequencies[i] != 0)
             {
@@ -17,7 +17,7 @@ public static class HistogramStretch
         
         var max = 255;
 
-        for (int i = frequencies.Length - 1; i >= 0; i--)
+        for (var i = frequencies.Length - 1; i >= 0; i--)
         {
             if (frequencies[i] != 0)
             {
@@ -26,22 +26,22 @@ public static class HistogramStretch
             }
         }
 
-        var newLut = new byte[256];
+        var recodingTable = new byte[256];
 
         for (var i = 0; i < 256; i++)
         {
-            if (i < min) newLut[i] = 0;
-            else if (i > max) newLut[i] = 255;
-            else newLut[i] = (byte)((i-min) * 255 / (max-min));
+            if (i < min) recodingTable[i] = 0;
+            else if (i > max) recodingTable[i] = 255;
+            else recodingTable[i] = (byte)((i-min) * 255 / (max-min));
         }
         
-        return newLut;
+        return recodingTable;
     }
 
     public static byte[] CalculateStretchWithSaturation(int[] frequencies)
     {
         var totalPixels = frequencies.Sum();
-        var ignoredPixels = totalPixels * 0.05;
+        var ignoredPixels = totalPixels * 0.05; // number of pixels to ignore
 
         var min = 0;
         var ignoredMin = 0;
@@ -63,7 +63,7 @@ public static class HistogramStretch
         var max = 255;
         var ignoredMax = 0;
         
-        for (int i = frequencies.Length - 1; i >= 0; i--)
+        for (var i = frequencies.Length - 1; i >= 0; i--)
         {
             if (frequencies[i] != 0)
             {
@@ -77,16 +77,16 @@ public static class HistogramStretch
             }
         }
         
-        var newLut = new byte[256];
+        var recodingTable = new byte[256];
 
         for (var i = 0; i < 256; i++)
         {
-            if (i < min) newLut[i] = 0;
-            else if (i > max) newLut[i] = 255;
-            else newLut[i] = (byte)((i-min) * 255 / (max-min));
+            if (i < min) recodingTable[i] = 0;
+            else if (i > max) recodingTable[i] = 255;
+            else recodingTable[i] = (byte)((i-min) * 255 / (max-min));
         }
 
-        return newLut;
+        return recodingTable;
     }
 
     public static byte[] Equalize(int[] frequencies)
@@ -104,13 +104,13 @@ public static class HistogramStretch
 
         var d0 = empiricDistribution.First(v => v > 0);
         
-        var newLut = new byte[256];
+        var recodingTable = new byte[256];
 
         for (var i = 0; i < 256; i++)
         {
-            newLut[i] = (byte)((empiricDistribution[i] - d0 / (1 - d0)) * 255);
+            recodingTable[i] = (byte)((empiricDistribution[i] - d0 / (1 - d0)) * 255);
         }
         
-        return newLut;
+        return recodingTable;
     }
 }
