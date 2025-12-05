@@ -52,6 +52,14 @@ public static class BitmapExtensions
         var bytesPerPixel = (bitmap.Format.BitsPerPixel + 7) / 8;
         return bytesPerPixel; 
     }
+
+    public static Bitmap ToGrayscale(this Bitmap original)
+    {
+        var recodingTable = new byte[256];
+        for (var i = 0; i < 256; i++) recodingTable[i] = (byte)i;
+        var result = original.Recode(recodingTable);
+        return result;
+    }
     
     public static Bitmap Recode(this Bitmap original, byte[] recodingTable)
     {

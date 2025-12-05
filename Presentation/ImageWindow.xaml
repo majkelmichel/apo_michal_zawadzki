@@ -12,6 +12,7 @@
                 <MenuItem Header="_Save" Click="SaveImage" />
                 <MenuItem Header="_Duplicate" Click="DuplicateImage" />
                 <MenuItem Header="_Resize to original" Click="ResizeToOriginal" />
+                <MenuItem Header="Convert to grayscale" Click="ConvertToGrayscale" />
             </MenuItem>
             <MenuItem Header="_Analyze" x:Name="Menu">
                 <MenuItem Header="Calculate _LUT" Click="CalculateLut" />
@@ -27,6 +28,7 @@
                     <MenuItem Header="Subtract images" Click="SubtractImages"></MenuItem>
                     <MenuItem Header="Number operations" Click="NumberOperations"></MenuItem>
                 </MenuItem>
+                <MenuItem Header="Bool operations" Click="BoolOperations" />
             </MenuItem>
         </Menu>
         <Image x:Name="PreviewImage" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" />

@@ -9,6 +9,7 @@ using Algorithms;
 using Algorithms.Point;
 using Microsoft.Win32;
 using Presentation.Point;
+using Presentation.Point.Bool;
 using Presentation.Point.Math;
 using Presentation.WindowManagement;
 
@@ -188,6 +189,21 @@ public partial class ImageWindow
         numberOperationsWindow.ShowDialog();
         
         _windowModel.Image = numberOperationsWindow.Image;
+        LoadImage();
+    }
+
+    private void ConvertToGrayscale(object sender, RoutedEventArgs e)
+    {
+        _windowModel.Image = _windowModel.Image.ToGrayscale();
+        LoadImage();
+    }
+
+    private void BoolOperations(object sender, RoutedEventArgs e)
+    {
+        var boolOperationsWindow = new BoolOperationsWindow(_windowModel);
+        boolOperationsWindow.ShowDialog();
+        
+        _windowModel.Image = boolOperationsWindow.Image;
         LoadImage();
     }
 }
