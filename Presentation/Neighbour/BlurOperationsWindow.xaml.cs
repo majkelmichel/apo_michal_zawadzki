@@ -9,16 +9,17 @@ using Window = System.Windows.Window;
 
 namespace Presentation.Neighbour;
 
-public partial class NeighbourOperationsWindow : Window
+public partial class BlurOperationsWindow : Window
 {
+    
     private ManagedWindow _window;
     public Bitmap Image { get; private set; }
-    public NeighbourOperationsWindow(ManagedWindow window)
+    public BlurOperationsWindow(ManagedWindow window)
     {
         InitializeComponent();
         _window = window;
         Image = _window.Image;
-        BorderType.ItemsSource = typeof(BorderTypes).GetEnumValues();
+        BorderType.ItemsSource = typeof(BorderRuleTypes).GetEnumValues();
     }
     
     [GeneratedRegex("^[0-9]+$")]
@@ -50,11 +51,24 @@ public partial class NeighbourOperationsWindow : Window
         }
     }
 
-    private void Blur(object sender, RoutedEventArgs e)
+    private void BlurMask1(object sender, RoutedEventArgs e)
     {
         if (int.TryParse(NumericInput.Text, out var numericValue))
         {
-            Image = BorderType.SelectedItem != null ? BlurOperations.Blur(Image, (BorderTypes)BorderType.SelectedItem, numericValue) : BlurOperations.Blur(Image, borderWidth: numericValue);
+            Image = NeighbourOperations.Blur(Image, (BorderRuleTypes)BorderType.SelectedItem, numericValue, 0);
+            Close();
+        }
+        else
+        {
+            MessageBox.Show("Please enter a valid numeric value.", "Invalid Input");
+        }
+    }
+    
+    private void BlurMask2(object sender, RoutedEventArgs e)
+    {
+        if (int.TryParse(NumericInput.Text, out var numericValue))
+        {
+            Image = NeighbourOperations.Blur(Image, (BorderRuleTypes)BorderType.SelectedItem, numericValue, 1);
             Close();
         }
         else

@@ -6,7 +6,6 @@ using System.Windows.Controls;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using Algorithms;
-using Algorithms.Blur;
 using Algorithms.Point;
 using Microsoft.Win32;
 using Presentation.Neighbour;
@@ -209,27 +208,9 @@ public partial class ImageWindow
         LoadImage();
     }
 
-    private void Blur(object sender, RoutedEventArgs e)
-    {
-        _windowModel.Image = BlurOperations.Blur(_windowModel.Image);
-        LoadImage();
-    }
-    
-    private void MedianBlur(object sender, RoutedEventArgs e)
-    {
-        _windowModel.Image = BlurOperations.MedianBlur(_windowModel.Image);
-        LoadImage();
-    }
-    
-    private void GaussianBlur(object sender, RoutedEventArgs e)
-    {
-        _windowModel.Image = BlurOperations.GaussianBlur(_windowModel.Image);
-        LoadImage();
-    }
-
     private void NeighbourOperations(object sender, RoutedEventArgs e)
     {
-        var neighbourOperationsWindow = new NeighbourOperationsWindow(_windowModel);
+        var neighbourOperationsWindow = new BlurOperationsWindow(_windowModel);
         neighbourOperationsWindow.ShowDialog();
         
         _windowModel.Image = neighbourOperationsWindow.Image;
