@@ -99,4 +99,19 @@ public partial class EdgeDetectionOperationsWindow : Window
     {
         EdgeDetection(EdgeDetectionDirection.NW);
     }
+
+    private void EdgeDetectionSobel(object sender, RoutedEventArgs e)
+    {
+        
+        if (int.TryParse(NumericInput.Text, out var numericValue))
+        {
+            if (BorderType.SelectedItem is not BorderRuleTypes borderRuleTypes) borderRuleTypes = BorderRuleTypes.BorderConstant;
+            Image = NeighbourOperations.SobelDetectEdges(Image, borderRuleTypes, numericValue);
+            Close();
+        }
+        else
+        {
+            MessageBox.Show("Please enter a valid numeric value.", "Invalid Input");
+        }
+    }
 }

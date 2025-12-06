@@ -235,4 +235,12 @@ public partial class ImageWindow
         LoadImage();
     }
 
+    private void MedianBlur(object sender, RoutedEventArgs e)
+    {
+        var medianBlurWindow = new MedianBlurWindow(_windowModel.Image);
+        medianBlurWindow.ShowDialog();
+        
+        _windowModel.Image = medianBlurWindow.Image;
+        LoadImage();
+    }
 }

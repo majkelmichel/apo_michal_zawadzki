@@ -33,7 +33,8 @@
             <MenuItem Header="Neighbour operations">
                 <MenuItem Header="Blur operations" Click="BlurOperations" />
                 <MenuItem Header="Sharpen operations" Click="SharpenOperations" />
-                <MenuItem Header="Prewitt edge detection" Click="EdgeDetectionOperations" />
+                <MenuItem Header="Edge detection" Click="EdgeDetectionOperations" />
+                <MenuItem Header="Median blur" Click="MedianBlur" />
             </MenuItem>
         </Menu>
         <Image x:Name="PreviewImage" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" />

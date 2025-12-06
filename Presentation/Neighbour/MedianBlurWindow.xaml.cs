@@ -3,20 +3,16 @@ using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
 using Algorithms.Blur;
-using OpenCvSharp;
-using Presentation.WindowManagement;
-using Window = System.Windows.Window;
 
 namespace Presentation.Neighbour;
 
-public partial class BlurOperationsWindow : Window
+public partial class MedianBlurWindow : Window
 {
     public Bitmap Image { get; private set; }
-    public BlurOperationsWindow(ManagedWindow window)
+    public MedianBlurWindow(Bitmap image)
     {
         InitializeComponent();
-        Image = window.Image;
-        BorderType.ItemsSource = typeof(BorderRuleTypes).GetEnumValues();
+        Image = image;
     }
     
     [GeneratedRegex("^[0-9]+$")]
@@ -48,33 +44,7 @@ public partial class BlurOperationsWindow : Window
         }
     }
 
-    private void BlurMask1(object sender, RoutedEventArgs e)
-    {
-        if (int.TryParse(NumericInput.Text, out var numericValue))
-        {
-            Image = NeighbourOperations.Blur(Image, (BorderRuleTypes)BorderType.SelectedItem, numericValue, 0);
-            Close();
-        }
-        else
-        {
-            MessageBox.Show("Please enter a valid numeric value.", "Invalid Input");
-        }
-    }
-    
-    private void BlurMask2(object sender, RoutedEventArgs e)
-    {
-        if (int.TryParse(NumericInput.Text, out var numericValue))
-        {
-            Image = NeighbourOperations.Blur(Image, (BorderRuleTypes)BorderType.SelectedItem, numericValue, 1);
-            Close();
-        }
-        else
-        {
-            MessageBox.Show("Please enter a valid numeric value.", "Invalid Input");
-        }
-    }
-
-    private void MedianBlur(object sender, RoutedEventArgs e)
+    private void CalculateMedianBlur(object sender, RoutedEventArgs e)
     {
         if (int.TryParse(NumericInput.Text, out var numericValue) && numericValue % 2 == 1)
         {

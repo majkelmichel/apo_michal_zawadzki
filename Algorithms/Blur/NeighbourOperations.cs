@@ -193,4 +193,63 @@ public class NeighbourOperations
         }
         return bitmap;
     }
+    
+    private static Mat GetSobelMatrixX()
+    {
+        float[,] arr = { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
+        return GetFromArray(arr);
+    }
+
+    private static Mat GetSobelMatrixY()
+    {
+        float[,] arr = { { -1, -2, -1 }, { 0, 0, 0 }, { 1, 2, 1 } };
+        return GetFromArray(arr);
+    }
+    
+    public static Bitmap SobelDetectEdges(Bitmap bitmap, BorderRuleTypes borderType, int borderConstant = 0)
+    {
+        var src = bitmap.ToMat();
+    
+        // Konwersja do skali szarości jeśli obraz jest kolorowy
+        if (src.Channels() > 1)
+        {
+            Cv2.CvtColor(src, src, ColorConversionCodes.BGR2GRAY);
+        }
+
+        // Konwersja do formatu float dla lepszej precyzji
+        src.ConvertTo(src, MatType.CV_32F);
+
+        // Obliczenie gradientów Sobela w kierunkach x i y
+        var gradX = new Mat();
+        var gradY = new Mat();
+
+        var borderTypeCV = borderType switch
+        {
+            BorderRuleTypes.BorderConstant => BorderTypes.Constant,
+            BorderRuleTypes.BorderByUser => BorderTypes.Constant,
+            BorderRuleTypes.BorderReflect => BorderTypes.Reflect,
+            _ => BorderTypes.Constant
+        };
+
+        // Obliczenie gradientów używając operatora Sobela
+        Cv2.Sobel(src, gradX, MatType.CV_32F, 1, 0, 3, borderType: borderTypeCV);
+        Cv2.Sobel(src, gradY, MatType.CV_32F, 0, 1, 3, borderType: borderTypeCV);
+
+        // Obliczenie magnitude gradientu
+        var magnitude = new Mat();
+        Cv2.Magnitude(gradX, gradY, magnitude);
+
+        // Normalizacja wyniku do zakresu 0-255
+        Cv2.Normalize(magnitude, magnitude, 0, 255, NormTypes.MinMax);
+        magnitude.ConvertTo(magnitude, MatType.CV_8U);
+
+        return magnitude.ToBitmap();
+    }
+
+    public static Bitmap MedianBlur(Bitmap bitmap, int kernelSize)
+    {
+        var mat = bitmap.ToMat();
+        var result = mat.MedianBlur(kernelSize);
+        return result.ToBitmap();
+    }
 }

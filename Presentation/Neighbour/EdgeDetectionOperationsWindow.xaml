@@ -23,6 +23,7 @@
                      PreviewTextInput="NumericInput_PreviewTextInput"
                      DataObject.Pasting="NumericInput_Pasting" />
         </Grid>
+        <TextBlock>Prewitt masks</TextBlock>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition></ColumnDefinition>
@@ -314,10 +315,18 @@
                 <ColumnDefinition></ColumnDefinition>
                 <ColumnDefinition></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Margin="10" Click="EdgeDetectionN">Detect S</Button>
-            <Button Grid.Column="1" Margin="10" Click="EdgeDetectionNE">Detect SW</Button>
-            <Button Grid.Column="2" Margin="10" Click="EdgeDetectionE">Detect W</Button>
-            <Button Grid.Column="3" Margin="10" Click="EdgeDetectionSE">Detect NW</Button>
+            <Button Grid.Column="0" Margin="10" Click="EdgeDetectionS">Detect S</Button>
+            <Button Grid.Column="1" Margin="10" Click="EdgeDetectionSW">Detect SW</Button>
+            <Button Grid.Column="2" Margin="10" Click="EdgeDetectionW">Detect W</Button>
+            <Button Grid.Column="3" Margin="10" Click="EdgeDetectionNW">Detect NW</Button>
+        </Grid>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock>Sobel</TextBlock>
+            <Button Grid.Column="1" Click="EdgeDetectionSobel">Calculate edge with Sobel</Button>
         </Grid>
     </StackPanel>
 </Window>
