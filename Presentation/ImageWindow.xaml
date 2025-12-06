@@ -30,7 +30,10 @@
                 </MenuItem>
                 <MenuItem Header="Bool operations" Click="BoolOperations" />
             </MenuItem>
-            <MenuItem Header="Neighbour operations" Click="NeighbourOperations" />
+            <MenuItem Header="Neighbour operations">
+                <MenuItem Header="Blur operations" Click="BlurOperations" />
+                <MenuItem Header="Sharpen operations" Click="ShapernOperations" />
+            </MenuItem>
         </Menu>
         <Image x:Name="PreviewImage" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" />
     </DockPanel>

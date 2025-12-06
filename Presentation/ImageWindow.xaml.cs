@@ -208,12 +208,21 @@ public partial class ImageWindow
         LoadImage();
     }
 
-    private void NeighbourOperations(object sender, RoutedEventArgs e)
+    private void BlurOperations(object sender, RoutedEventArgs e)
     {
-        var neighbourOperationsWindow = new BlurOperationsWindow(_windowModel);
-        neighbourOperationsWindow.ShowDialog();
+        var blurOperationsWindow = new BlurOperationsWindow(_windowModel);
+        blurOperationsWindow.ShowDialog();
         
-        _windowModel.Image = neighbourOperationsWindow.Image;
+        _windowModel.Image = blurOperationsWindow.Image;
+        LoadImage();
+    }
+
+    private void ShapernOperations(object sender, RoutedEventArgs e)
+    {
+        var sharpenOperationsWindow = new SharpenOperationsWindow(_windowModel);
+        sharpenOperationsWindow.ShowDialog();
+        
+        _windowModel.Image = sharpenOperationsWindow.Image;
         LoadImage();
     }
 }

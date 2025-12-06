@@ -77,6 +77,33 @@ public class NeighbourOperations
 
     public static Bitmap Sharpen(Bitmap bitmap, BorderRuleTypes borderType, int borderConstant = 0, int selectedMatrix = 0)
     {
+        var mat = bitmap.ToMat();
+        var kernel = selectedMatrix switch
+        {
+            0 => GetSharpenMatrix1(),
+            1 => GetSharpenMatrix2(),
+            _ => GetSharpenMatrix3()
+        };
+        
+        if (borderType == BorderRuleTypes.BorderConstant)
+        {
+            var matWithBorder = mat.CopyMakeBorder(1,1,1,1, BorderTypes.Constant, Scalar.All(0));
+            var result = matWithBorder.Filter2D(-1, kernel, borderType: BorderTypes.Default);
+            return result.ToBitmap();
+        }
+
+        if (borderType == BorderRuleTypes.BorderByUser)
+        {
+            var matWithBorder = mat.CopyMakeBorder(1,1,1,1, BorderTypes.Constant, Scalar.All(borderConstant));
+            var result = matWithBorder.Filter2D(-1, kernel, borderType: BorderTypes.Default);
+            return result.ToBitmap();
+        }
+
+        if (borderType == BorderRuleTypes.BorderReflect)
+        {
+            var result = mat.Filter2D(-1, kernel, borderType: BorderTypes.Reflect);
+            return result.ToBitmap();
+        }
         return bitmap;
     }
 }
