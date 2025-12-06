@@ -11,12 +11,11 @@ public partial class GrayscaleThreshold : Window
     public GrayscaleThreshold(Bitmap bitmap)
     {
         InitializeComponent();
-        _imageToConvert = bitmap;
+        Image = bitmap;
     }
-    
-    private Bitmap _imageToConvert;
-    public Bitmap Image => _imageToConvert;
-    
+
+    public Bitmap Image { get; private set; }
+
     [GeneratedRegex("^[0-9]+$")]
     private static partial Regex Numeric();
     
@@ -50,8 +49,8 @@ public partial class GrayscaleThreshold : Window
     {
         if (int.TryParse(NumericInput.Text, out var numericValue))
         {
-            var processedBitmap = PointOperations.GrayscaleThreshold(_imageToConvert, (byte)numericValue);
-            _imageToConvert = processedBitmap;
+            var processedBitmap = PointOperations.GrayscaleThreshold(Image, (byte)numericValue);
+            Image = processedBitmap;
             Close();
         }
         else

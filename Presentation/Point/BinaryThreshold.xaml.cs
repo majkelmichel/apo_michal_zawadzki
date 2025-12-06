@@ -8,13 +8,12 @@ namespace Presentation.Point;
 
 public partial class BinaryThreshold : Window
 {
-    private Bitmap _imageToConvert;
-    public Bitmap Image => _imageToConvert;
-    
+    public Bitmap Image { get; private set; }
+
     public BinaryThreshold(Bitmap bitmap)
     {
         InitializeComponent();
-        _imageToConvert = bitmap;
+        Image = bitmap;
     }
 
     [GeneratedRegex("^[0-9]+$")]
@@ -50,8 +49,8 @@ public partial class BinaryThreshold : Window
     {
         if (int.TryParse(NumericInput.Text, out var numericValue))
         {
-            var processedBitmap = PointOperations.BinaryThreshold(_imageToConvert, (byte)numericValue);
-            _imageToConvert = processedBitmap;
+            var processedBitmap = PointOperations.BinaryThreshold(Image, (byte)numericValue);
+            Image = processedBitmap;
             Close();
         }
         else

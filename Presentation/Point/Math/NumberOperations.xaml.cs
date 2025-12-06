@@ -8,13 +8,12 @@ namespace Presentation;
 
 public partial class NumberOperations : Window
 {
-    private Bitmap _imageToConvert;
-    public Bitmap Image => _imageToConvert;
-    
+    public Bitmap Image { get; private set; }
+
     public NumberOperations(Bitmap image)
     {
         InitializeComponent();
-        _imageToConvert = image;
+        Image = image;
     }
     
 
@@ -52,7 +51,7 @@ public partial class NumberOperations : Window
         if (int.TryParse(NumericInput.Text, out var numericValue))
         {
             var recodingTable = MathOperations.Number.Add((byte)numericValue);
-            _imageToConvert = _imageToConvert.Recode(recodingTable);
+            Image = Image.Recode(recodingTable);
             Close();
         }
         else
@@ -65,8 +64,9 @@ public partial class NumberOperations : Window
     {
         if (int.TryParse(NumericInput.Text, out var numericValue))
         {
-            var recodingTable = MathOperations.Number.Multiply((byte)numericValue);
-            _imageToConvert = _imageToConvert.Recode(recodingTable);
+            var saturate = Saturate.IsChecked == true;
+            var recodingTable = MathOperations.Number.Multiply((byte)numericValue, saturate);
+            Image = Image.Recode(recodingTable);
             Close();
         }
         else
@@ -81,7 +81,7 @@ public partial class NumberOperations : Window
         if (int.TryParse(NumericInput.Text, out var numericValue))
         {
             var recodingTable = MathOperations.Number.Divide((byte)numericValue);
-            _imageToConvert = _imageToConvert.Recode(recodingTable);
+            Image = Image.Recode(recodingTable);
             Close();
         }
         else

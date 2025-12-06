@@ -8,12 +8,12 @@ namespace Presentation.Point;
 
 public partial class ReduceGrayLevels : Window
 {
-    private Bitmap _imageToConvert;
-    public Bitmap Image => _imageToConvert;
+    public Bitmap Image { get; private set; }
+
     public ReduceGrayLevels(Bitmap image)
     {
         InitializeComponent();
-        _imageToConvert = image;
+        Image = image;
     }
 
     // Only allow numeric input
@@ -49,8 +49,8 @@ public partial class ReduceGrayLevels : Window
     {
         if (int.TryParse(NumericInput.Text, out var numericValue))
         {
-            var processedBitmap = PointOperations.ReduceGrayLevels(_imageToConvert, (byte)numericValue);
-            _imageToConvert = processedBitmap;
+            var processedBitmap = PointOperations.ReduceGrayLevels(Image, (byte)numericValue);
+            Image = processedBitmap;
             Close();
         }
         else

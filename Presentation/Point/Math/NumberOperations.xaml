@@ -8,6 +8,7 @@
         Title="NumberOperations" Height="450" Width="800">
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+            <CheckBox Content="Saturate" Name="Saturate"></CheckBox>
             <TextBox Name="NumericInput"
                      Width="200"
                      Height="30"

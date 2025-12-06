@@ -21,7 +21,7 @@ public partial class AddImages : Window
         InitializeComponent();
         _windows = WindowManager.GetInstance().GetWindows();
         Windows = _windows
-            .Where(w => w.Id != currentWindow.Id).ToArray()
+            .Where(w => w.Id != currentWindow.Id)
             .Select((w, i) => new WindowViewmodel
             {
                 Index = i,
@@ -30,21 +30,31 @@ public partial class AddImages : Window
             });
         DataContext = this;
         _resultImage = currentWindow.Image;
-        _selectedWindows = new bool[System.Math.Max(1, Windows.Count() - 1)];
+        _selectedWindows = new bool[System.Math.Max(1, Windows.Count())];
     }
 
     private void SubmitButton_Click(object sender, RoutedEventArgs e)
     {
-        var imagesToAdd = new List<Bitmap>();
-        imagesToAdd.Add(_resultImage);
+        var imagesToAdd = new List<Bitmap> { _resultImage };
         for (var i = 0; i < _selectedWindows.Length; i++)
         {
-            if (_selectedWindows[i]) imagesToAdd.Add(_windows[i].Image);
-            // TODO: fix selected images (sometimes uses the same image twice)
+            if (_selectedWindows[i])
+            {
+                var windowViewModel = Windows.First(w => w.Index == i);
+                var window = _windows.First(w => w.Id == windowViewModel.Id);
+                imagesToAdd.Add(window.Image);
+            }
         }
-        
-        _resultImage = MathOperations.AddImages(imagesToAdd.ToArray(), _saturate);
-        Close();
+
+        try
+        {
+            _resultImage = MathOperations.AddImages(imagesToAdd.ToArray(), _saturate);
+            Close();
+        }
+        catch (ArgumentException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
     }
     
 

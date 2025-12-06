@@ -63,7 +63,7 @@ public class MathOperations
         // Lab 2 Zad 1
         public static byte[] Multiply(byte value, bool saturate = false)
         {
-            // TODO: na czym ma polegać wysycenie?
+            if (!saturate) return Enumerable.Range(0, 256).Select(i => (byte)Math.Min(255, i / value * value)).ToArray();
             return Enumerable.Range(0, 256).Select(i => (byte)Math.Min(255, i * value)).ToArray();
         }
 
