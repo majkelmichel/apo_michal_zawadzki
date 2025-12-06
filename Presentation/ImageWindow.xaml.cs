@@ -217,7 +217,7 @@ public partial class ImageWindow
         LoadImage();
     }
 
-    private void ShapernOperations(object sender, RoutedEventArgs e)
+    private void SharpenOperations(object sender, RoutedEventArgs e)
     {
         var sharpenOperationsWindow = new SharpenOperationsWindow(_windowModel);
         sharpenOperationsWindow.ShowDialog();
@@ -225,4 +225,14 @@ public partial class ImageWindow
         _windowModel.Image = sharpenOperationsWindow.Image;
         LoadImage();
     }
+
+    private void EdgeDetectionOperations(object sender, RoutedEventArgs e)
+    {
+        var edgeDetectionOperationsWindow = new EdgeDetectionOperationsWindow(_windowModel.Image);
+        edgeDetectionOperationsWindow.ShowDialog();
+        
+        _windowModel.Image = edgeDetectionOperationsWindow.Image;
+        LoadImage();
+    }
+
 }

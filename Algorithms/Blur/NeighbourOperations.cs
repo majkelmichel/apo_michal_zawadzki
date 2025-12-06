@@ -106,4 +106,91 @@ public class NeighbourOperations
         }
         return bitmap;
     }
+
+    private static Mat GetPrewittMatrixN()
+    {
+        float[,] arr = { {1, 1, 1}, {0, 0, 0}, {-1, -1, -1} };
+        return GetFromArray(arr);
+    }
+
+    private static Mat GetPrewittMatrixNE()
+    {
+        float[,] arr = { {0, 1, 1}, {-1, 0, 1}, {-1, -1, 0} };
+        return GetFromArray(arr);
+    }
+
+    private static Mat GetPrewittMatrixE()
+    {
+        float[,] arr = { {-1, 0, 1}, {-1, 0, 1}, {-1, 0, 1} };
+        return GetFromArray(arr);
+    }
+
+    private static Mat GetPrewittMatrixSE()
+    {
+        float[,] arr = { {-1, -1, 0}, {-1, 0, 1}, {0, 1, 1} };
+        return GetFromArray(arr);
+    }
+    
+    private static Mat GetPrewittMatrixS()
+    {
+        float[,] arr = { {-1, -1, -1}, {0, 0, 0,}, {1, 1, 1} };
+        return GetFromArray(arr);
+    }
+
+    private static Mat GetPrewittMatrixSW()
+    {
+        float[,] arr = { {0, -1, -1}, {1, 0, -1}, {1, 1, 0} };
+        return GetFromArray(arr);
+    }
+
+    private static Mat GetPrewittMatrixW()
+    {
+        float[,] arr = { {1, 0, -1}, {1, 0, -1}, {1, 0, -1} };
+        return GetFromArray(arr);
+    }
+
+    private static Mat GetPrewittMatrixNW()
+    {
+        float[,] arr = { {1, 1, 0}, {0, 0, -1}, {-1, -1, -1} };
+        return GetFromArray(arr);
+    }
+
+    public static Bitmap PrewittEdge(Bitmap bitmap, BorderRuleTypes borderType, int borderConstant = 0,
+        EdgeDetectionDirection direction = EdgeDetectionDirection.N)
+    {
+        
+        var mat = bitmap.ToMat();
+        var kernel = direction switch
+        {
+            EdgeDetectionDirection.NE => GetPrewittMatrixNE(),
+            EdgeDetectionDirection.E => GetPrewittMatrixE(),
+            EdgeDetectionDirection.SE => GetPrewittMatrixSE(),
+            EdgeDetectionDirection.S => GetPrewittMatrixS(),
+            EdgeDetectionDirection.SW => GetPrewittMatrixSW(),
+            EdgeDetectionDirection.W => GetPrewittMatrixW(),
+            EdgeDetectionDirection.NW => GetPrewittMatrixNW(),
+            _ => GetPrewittMatrixN()
+        };
+        
+        if (borderType == BorderRuleTypes.BorderConstant)
+        {
+            var matWithBorder = mat.CopyMakeBorder(1,1,1,1, BorderTypes.Constant, Scalar.All(0));
+            var result = matWithBorder.Filter2D(-1, kernel, borderType: BorderTypes.Default);
+            return result.ToBitmap();
+        }
+
+        if (borderType == BorderRuleTypes.BorderByUser)
+        {
+            var matWithBorder = mat.CopyMakeBorder(1,1,1,1, BorderTypes.Constant, Scalar.All(borderConstant));
+            var result = matWithBorder.Filter2D(-1, kernel, borderType: BorderTypes.Default);
+            return result.ToBitmap();
+        }
+
+        if (borderType == BorderRuleTypes.BorderReflect)
+        {
+            var result = mat.Filter2D(-1, kernel, borderType: BorderTypes.Reflect);
+            return result.ToBitmap();
+        }
+        return bitmap;
+    }
 }

@@ -32,7 +32,8 @@
             </MenuItem>
             <MenuItem Header="Neighbour operations">
                 <MenuItem Header="Blur operations" Click="BlurOperations" />
-                <MenuItem Header="Sharpen operations" Click="ShapernOperations" />
+                <MenuItem Header="Sharpen operations" Click="SharpenOperations" />
+                <MenuItem Header="Prewitt edge detection" Click="EdgeDetectionOperations" />
             </MenuItem>
         </Menu>
         <Image x:Name="PreviewImage" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" />
