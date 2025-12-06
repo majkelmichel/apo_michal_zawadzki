@@ -11,11 +11,10 @@ public partial class BoolOperationsWindow : Window
 {
     
     public IEnumerable<WindowViewmodel> Windows { get; init; }
-    private ManagedWindow[] _windows;
-    private Bitmap _resultImage;
-    public Bitmap Image => _resultImage;
+    private readonly ManagedWindow[] _windows;
+    public Bitmap Image { get; private set; }
 
-    private ManagedWindow _currentWindow;
+    private readonly ManagedWindow _currentWindow;
     private WindowViewmodel _selectedWindow;
     
     public BoolOperationsWindow(ManagedWindow currentWindow)
@@ -42,25 +41,25 @@ public partial class BoolOperationsWindow : Window
 
     private void NotClick(object sender, RoutedEventArgs e)
     {
-        _resultImage = BoolOperations.Not(_currentWindow.Image);
+        Image = BoolOperations.Not(_currentWindow.Image);
         Close();
     }
 
     private void AndClick(object sender, RoutedEventArgs e)
     {
-        _resultImage = BoolOperations.And(_currentWindow.Image, _windows.First(w => w.Id == _selectedWindow.Id).Image);
+        Image = BoolOperations.And(_currentWindow.Image, _windows.First(w => w.Id == _selectedWindow.Id).Image);
         Close();
     }
 
     private void OrClick(object sender, RoutedEventArgs e)
     {
-        _resultImage = BoolOperations.Or(_currentWindow.Image, _windows.First(w => w.Id == _selectedWindow.Id).Image);
+        Image = BoolOperations.Or(_currentWindow.Image, _windows.First(w => w.Id == _selectedWindow.Id).Image);
         Close();
     }
 
     private void XorClick(object sender, RoutedEventArgs e)
     {
-        _resultImage = BoolOperations.Xor(_currentWindow.Image, _windows.First(w => w.Id == _selectedWindow.Id).Image);
+        Image = BoolOperations.Xor(_currentWindow.Image, _windows.First(w => w.Id == _selectedWindow.Id).Image);
         Close();
     }
 }
