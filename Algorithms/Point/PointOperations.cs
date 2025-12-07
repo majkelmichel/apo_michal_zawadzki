@@ -97,8 +97,8 @@ public class PointOperations
         for (var i = 0; i < 256; i++)
         {
             if (i < p1) recodingTable[i] = 0;
-            else if (i < p2) recodingTable[i] = 127;
-            else recodingTable[i] = 255;
+            else if (i < p2) recodingTable[i] = 255;
+            else recodingTable[i] = 0;
         }
 
         return recodingTable;
