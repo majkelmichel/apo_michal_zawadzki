@@ -37,6 +37,10 @@
                 <MenuItem Header="Median blur" Click="MedianBlur" />
                 <MenuItem Header="Canny Edge Detection" Click="CannyEdgeDetection" />
             </MenuItem>
+            <MenuItem Header="Lab3">
+                <MenuItem Header="Histogram stretch by values" Click="HistogramStretch" />
+                <MenuItem Header="Double threshold" Click="DoubleThreshold"></MenuItem>
+            </MenuItem>
         </Menu>
         <Image x:Name="PreviewImage" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" />
     </DockPanel>

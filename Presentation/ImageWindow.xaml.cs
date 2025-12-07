@@ -252,4 +252,22 @@ public partial class ImageWindow
         _windowModel.Image = cannyEdgeDetectionWindow.Image;
         LoadImage();
     }
+
+    private void HistogramStretch(object sender, RoutedEventArgs e)
+    {
+        var histogramStretchWindow = new HistogramStretchWindow(_windowModel.Image);
+        histogramStretchWindow.ShowDialog();
+        
+        _windowModel.Image = histogramStretchWindow.Image;
+        LoadImage();
+    }
+
+    private void DoubleThreshold(object sender, RoutedEventArgs e)
+    {
+        var doubleThresholdWindow = new DoubleThreshold(_windowModel.Image);
+        doubleThresholdWindow.ShowDialog();
+        
+        _windowModel.Image = doubleThresholdWindow.Image;
+        LoadImage();
+    }
 }

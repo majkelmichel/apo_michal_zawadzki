@@ -113,4 +113,21 @@ public static class HistogramStretch
         
         return recodingTable;
     }
+
+    public static byte[] StretchByValues(int p1, int p2, int q1, int q2)
+    {
+        var lut = new byte[256];
+    
+        for (var i = 0; i < 256; i++)
+        {
+            if (i < p1)
+                lut[i] = (byte)q1;
+            else if (i > p2)
+                lut[i] = (byte)q2;
+            else
+                lut[i] = (byte)(q1 + (i - p1) * (q2 - q1) / (p2 - p1));
+        }
+    
+        return lut;
+    }
 }

@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
+using OpenCvSharp.Extensions;
 
 namespace Algorithms.Point;
 
@@ -86,5 +87,19 @@ public class PointOperations
         }
         
         return result;
+    }
+
+    // lab 3 zad 2
+    public static byte[] DoubleThreshold(int p1, int p2)
+    {
+        var recodingTable = new byte[256];
+        for (var i = 0; i < 256; i++)
+        {
+            if (i < p1) recodingTable[i] = 0;
+            else if (i < p2) recodingTable[i] = 127;
+            else recodingTable[i] = 255;
+        }
+
+        return recodingTable;
     }
 }

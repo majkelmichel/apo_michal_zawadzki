@@ -1,0 +1,56 @@
+﻿<Window x:Class="Presentation.HistogramStretchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Presentation"
+        mc:Ignorable="d"
+        Title="HistogramStretch" Height="450" Width="800">
+    <StackPanel>
+        <Grid Margin="10, 5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0">p1:</TextBlock>
+            <TextBox Grid.Column="1" Name="p1"
+                     Text="50"
+                     PreviewTextInput="NumericInput_PreviewTextInput"
+                     DataObject.Pasting="NumericInput_Pasting" />
+        </Grid>
+        <Grid Margin="10, 5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0">p2:</TextBlock>
+            <TextBox Grid.Column="1" Name="p2"
+                     Text="200"
+                     PreviewTextInput="NumericInput_PreviewTextInput"
+                     DataObject.Pasting="NumericInput_Pasting" />
+        </Grid>
+        <Grid Margin="10, 5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0">q1:</TextBlock>
+            <TextBox Grid.Column="1" Name="q1"
+                     Text="100"
+                     PreviewTextInput="NumericInput_PreviewTextInput"
+                     DataObject.Pasting="NumericInput_Pasting" />
+        </Grid>
+        <Grid Margin="10, 5">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition></ColumnDefinition>
+                <ColumnDefinition></ColumnDefinition>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0">q2:</TextBlock>
+            <TextBox Grid.Column="1" Name="q2"
+                     Text="200"
+                     PreviewTextInput="NumericInput_PreviewTextInput"
+                     DataObject.Pasting="NumericInput_Pasting" />
+        </Grid>
+        <Button Click="StretchHistogram">Stretch histogram</Button>
+    </StackPanel>
+</Window>
