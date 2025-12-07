@@ -40,6 +40,8 @@
             <MenuItem Header="Lab3">
                 <MenuItem Header="Histogram stretch by values" Click="HistogramStretch" />
                 <MenuItem Header="Double threshold" Click="DoubleThreshold"></MenuItem>
+                <MenuItem Header="Otsu threshold" Click="OtsuThreshold"></MenuItem>
+                <MenuItem Header="Adaptive threshold" Click="AdaptiveThreshold"></MenuItem>
             </MenuItem>
         </Menu>
         <Image x:Name="PreviewImage" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" />

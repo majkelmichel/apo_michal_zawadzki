@@ -1,5 +1,6 @@
 ﻿using System.Drawing;
 using System.Drawing.Imaging;
+using OpenCvSharp;
 using OpenCvSharp.Extensions;
 
 namespace Algorithms.Point;
@@ -101,5 +102,23 @@ public class PointOperations
         }
 
         return recodingTable;
+    }
+    
+    public static Bitmap OtsuThreshold(Bitmap bitmap)
+    {
+        var mat = bitmap.ToMat();
+
+        var result = mat.Threshold(0, 255, ThresholdTypes.Otsu);
+        
+        return result.ToBitmap();
+    }
+
+    public static Bitmap AdaptiveThreshold(Bitmap bitmap)
+    {
+        var mat = bitmap.ToMat();
+        
+        var result = mat.AdaptiveThreshold(255, AdaptiveThresholdTypes.GaussianC, ThresholdTypes.Binary, 11, 2);
+        
+        return result.ToBitmap();
     }
 }

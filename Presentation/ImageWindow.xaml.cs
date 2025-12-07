@@ -270,4 +270,16 @@ public partial class ImageWindow
         _windowModel.Image = doubleThresholdWindow.Image;
         LoadImage();
     }
+
+    private void OtsuThreshold(object sender, RoutedEventArgs e)
+    {
+        _windowModel.Image = PointOperations.OtsuThreshold(_windowModel.Image);
+        LoadImage();
+    }
+
+    private void AdaptiveThreshold(object sender, RoutedEventArgs e)
+    {
+        _windowModel.Image = PointOperations.AdaptiveThreshold(_windowModel.Image);
+        LoadImage();
+    }
 }
