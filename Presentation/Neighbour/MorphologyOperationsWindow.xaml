@@ -1,0 +1,20 @@
+﻿<Window x:Class="Presentation.Neighbour.MorphologyOperationsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Presentation.Neighbour"
+        mc:Ignorable="d"
+        Title="MorphologyOperationsWindow" Height="450" Width="800">
+    <StackPanel Margin="10">
+        <ComboBox Name="StructuringElementSelect"
+                  Text="Structure element"
+                  IsEditable="True">
+        </ComboBox>
+        <Button Margin="0, 5" Click="Erode">Erode</Button>
+        <Button Margin="0, 5" Click="Dilate">Dilate</Button>
+        <Button Margin="0, 5" Click="Open">Open</Button>
+        <Button Margin="0, 5" Click="Close">Close</Button>
+        <Button Margin="0, 20" Click="Skeletonize">Skeletonize</Button>
+    </StackPanel>
+</Window>

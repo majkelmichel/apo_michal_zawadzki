@@ -282,4 +282,13 @@ public partial class ImageWindow
         _windowModel.Image = PointOperations.AdaptiveThreshold(_windowModel.Image);
         LoadImage();
     }
+
+    private void MorphologyOperations(object sender, RoutedEventArgs e)
+    {
+        var morphologyOperationsWindow = new MorphologyOperationsWindow(_windowModel.Image);
+        morphologyOperationsWindow.ShowDialog();
+        
+        _windowModel.Image = morphologyOperationsWindow.Image;
+        LoadImage();
+    }
 }
