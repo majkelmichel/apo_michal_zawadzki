@@ -244,8 +244,12 @@ public partial class ImageWindow
         LoadImage();
     }
 
-    private void CannyEdgeDetecion(object sender, RoutedEventArgs e)
+    private void CannyEdgeDetection(object sender, RoutedEventArgs e)
     {
+        var cannyEdgeDetectionWindow = new CannyEdgeDetectionWindow(_windowModel.Image);
+        cannyEdgeDetectionWindow.ShowDialog();
         
+        _windowModel.Image = cannyEdgeDetectionWindow.Image;
+        LoadImage();
     }
 }

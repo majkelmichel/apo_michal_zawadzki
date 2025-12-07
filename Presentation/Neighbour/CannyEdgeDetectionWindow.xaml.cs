@@ -1,14 +1,18 @@
-﻿using System.Text.RegularExpressions;
+﻿using System.Drawing;
+using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Input;
+using Algorithms.Blur;
 
 namespace Presentation.Neighbour;
 
 public partial class CannyEdgeDetectionWindow : Window
 {
-    public CannyEdgeDetectionWindow()
+    public Bitmap Image { get; private set; }
+    public CannyEdgeDetectionWindow(Bitmap image)
     {
         InitializeComponent();
+        Image = image;
     }
     
     [GeneratedRegex("^[0-9]+$")]
@@ -42,6 +46,14 @@ public partial class CannyEdgeDetectionWindow : Window
 
     private void Calculate(object sender, RoutedEventArgs e)
     {
-        throw new NotImplementedException();
+        if (int.TryParse(Threshold1.Text, out var threshold1) && int.TryParse(Threshold2.Text, out var threshold2))
+        {
+            Image = NeighbourOperations.CannyEdgeDetection(Image, threshold1, threshold2);
+            Close();
+        }
+        else
+        {
+            MessageBox.Show("Please enter valid values for thresholds.", "Invalid Input");
+        }
     }
 }

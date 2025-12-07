@@ -35,7 +35,7 @@
                 <MenuItem Header="Sharpen operations" Click="SharpenOperations" />
                 <MenuItem Header="Edge detection" Click="EdgeDetectionOperations" />
                 <MenuItem Header="Median blur" Click="MedianBlur" />
-                <MenuItem Header="Canny Edge Detection" Click="CannyEdgeDetecion" />
+                <MenuItem Header="Canny Edge Detection" Click="CannyEdgeDetection" />
             </MenuItem>
         </Menu>
         <Image x:Name="PreviewImage" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" />
