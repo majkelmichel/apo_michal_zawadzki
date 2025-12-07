@@ -197,22 +197,15 @@ public class NeighbourOperations
     public static Bitmap SobelDetectEdges(Bitmap bitmap, BorderRuleTypes borderType, int borderConstant = 0)
     {
         var mat = bitmap.ToMat();
-        Mat src;
-        
-        switch (borderType)
+
+        var src = borderType switch
         {
-            case BorderRuleTypes.BorderConstant:
-                src = mat.CopyMakeBorder(1,1,1,1, BorderTypes.Constant, Scalar.All(0));
-                break;
-            case BorderRuleTypes.BorderByUser:
-                src = mat.CopyMakeBorder(1,1,1,1, BorderTypes.Constant, Scalar.All(borderConstant));
-                break;
-            case BorderRuleTypes.BorderReflect:
-                src = mat.CopyMakeBorder(1,1,1,1, BorderTypes.Reflect);
-                break;
-            default:
-                throw new ArgumentOutOfRangeException(nameof(borderType), borderType, null);
-        }
+            BorderRuleTypes.BorderConstant => mat.CopyMakeBorder(1, 1, 1, 1, BorderTypes.Constant, Scalar.All(0)),
+            BorderRuleTypes.BorderByUser => mat.CopyMakeBorder(1, 1, 1, 1, BorderTypes.Constant,
+                Scalar.All(borderConstant)),
+            BorderRuleTypes.BorderReflect => mat.CopyMakeBorder(1, 1, 1, 1, BorderTypes.Reflect),
+            _ => throw new ArgumentOutOfRangeException(nameof(borderType), borderType, null)
+        };
 
         // Konwersja do skali szarości jeśli obraz jest kolorowy
         if (src.Channels() > 1)
@@ -242,10 +235,20 @@ public class NeighbourOperations
         return magnitude.ToBitmap();
     }
 
-    public static Bitmap MedianBlur(Bitmap bitmap, int kernelSize)
+    public static Bitmap MedianBlur(Bitmap bitmap, int kernelSize, BorderRuleTypes borderType, int borderConstant = 0)
     {
         var mat = bitmap.ToMat();
-        var result = mat.MedianBlur(kernelSize);
+
+        var src = borderType switch
+        {
+            BorderRuleTypes.BorderConstant => mat.CopyMakeBorder(1, 1, 1, 1, BorderTypes.Constant, Scalar.All(0)),
+            BorderRuleTypes.BorderByUser => mat.CopyMakeBorder(1, 1, 1, 1, BorderTypes.Constant,
+                Scalar.All(borderConstant)),
+            BorderRuleTypes.BorderReflect => mat.CopyMakeBorder(1, 1, 1, 1, BorderTypes.Reflect),
+            _ => throw new ArgumentOutOfRangeException(nameof(borderType), borderType, null)
+        };
+        
+        var result = src.MedianBlur(kernelSize);
         return result.ToBitmap();
     }
 }

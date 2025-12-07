@@ -13,6 +13,8 @@ public partial class MedianBlurWindow : Window
     {
         InitializeComponent();
         Image = image;
+        BorderType.ItemsSource = typeof(BorderRuleTypes).GetEnumValues();
+        BorderType.SelectedItem = BorderRuleTypes.BorderConstant;
     }
     
     [GeneratedRegex("^[0-9]+$")]
@@ -46,10 +48,17 @@ public partial class MedianBlurWindow : Window
 
     private void CalculateMedianBlur(object sender, RoutedEventArgs e)
     {
-        if (int.TryParse(NumericInput.Text, out var numericValue) && numericValue % 2 == 1)
+        if (int.TryParse(KernelSize.Text, out var kernelSize) && kernelSize % 2 == 1)
         {
-            Image = NeighbourOperations.MedianBlur(Image, numericValue);
-            Close();
+            if (int.TryParse(BorderConstant.Text, out var borderConstant) && borderConstant is >= 0 and <= 255)
+            {
+                Image = NeighbourOperations.MedianBlur(Image, kernelSize, (BorderRuleTypes)BorderType.SelectedItem, borderConstant);
+                Close();
+            }
+            else
+            {
+                MessageBox.Show("Please enter a valid border constant", "Invalid Input");
+            }
         }
         else
         {

@@ -17,6 +17,7 @@ public partial class BlurOperationsWindow : Window
         InitializeComponent();
         Image = window.Image;
         BorderType.ItemsSource = typeof(BorderRuleTypes).GetEnumValues();
+        BorderType.SelectedItem = BorderRuleTypes.BorderConstant;
     }
     
     [GeneratedRegex("^[0-9]+$")]
@@ -71,19 +72,6 @@ public partial class BlurOperationsWindow : Window
         else
         {
             MessageBox.Show("Please enter a valid numeric value.", "Invalid Input");
-        }
-    }
-
-    private void MedianBlur(object sender, RoutedEventArgs e)
-    {
-        if (int.TryParse(NumericInput.Text, out var numericValue) && numericValue % 2 == 1)
-        {
-            Image = NeighbourOperations.MedianBlur(Image, numericValue);
-            Close();
-        }
-        else
-        {
-            MessageBox.Show("Please enter an odd number", "Invalid Input");
         }
     }
 }
