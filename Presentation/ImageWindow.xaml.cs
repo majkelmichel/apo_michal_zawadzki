@@ -243,4 +243,9 @@ public partial class ImageWindow
         _windowModel.Image = medianBlurWindow.Image;
         LoadImage();
     }
+
+    private void CannyEdgeDetecion(object sender, RoutedEventArgs e)
+    {
+        
+    }
 }

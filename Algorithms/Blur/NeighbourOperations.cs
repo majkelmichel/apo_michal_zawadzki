@@ -251,4 +251,13 @@ public class NeighbourOperations
         var result = src.MedianBlur(kernelSize);
         return result.ToBitmap();
     }
+
+    public static Bitmap CannyEdgeDetection(Bitmap bitmap, double threshold1, double threshold2)
+    {
+        var mat = bitmap.ToMat();
+        
+        var res = mat.Canny(threshold1, threshold2);
+
+        return res.ToBitmap();
+    }
 }
