@@ -194,22 +194,26 @@ public class NeighbourOperations
         return bitmap;
     }
     
-    private static Mat GetSobelMatrixX()
-    {
-        float[,] arr = { { -1, 0, 1 }, { -2, 0, 2 }, { -1, 0, 1 } };
-        return GetFromArray(arr);
-    }
-
-    private static Mat GetSobelMatrixY()
-    {
-        float[,] arr = { { -1, -2, -1 }, { 0, 0, 0 }, { 1, 2, 1 } };
-        return GetFromArray(arr);
-    }
-    
     public static Bitmap SobelDetectEdges(Bitmap bitmap, BorderRuleTypes borderType, int borderConstant = 0)
     {
-        var src = bitmap.ToMat();
-    
+        var mat = bitmap.ToMat();
+        Mat src;
+        
+        switch (borderType)
+        {
+            case BorderRuleTypes.BorderConstant:
+                src = mat.CopyMakeBorder(1,1,1,1, BorderTypes.Constant, Scalar.All(0));
+                break;
+            case BorderRuleTypes.BorderByUser:
+                src = mat.CopyMakeBorder(1,1,1,1, BorderTypes.Constant, Scalar.All(borderConstant));
+                break;
+            case BorderRuleTypes.BorderReflect:
+                src = mat.CopyMakeBorder(1,1,1,1, BorderTypes.Reflect);
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(borderType), borderType, null);
+        }
+
         // Konwersja do skali szarości jeśli obraz jest kolorowy
         if (src.Channels() > 1)
         {
@@ -223,17 +227,9 @@ public class NeighbourOperations
         var gradX = new Mat();
         var gradY = new Mat();
 
-        var borderTypeCV = borderType switch
-        {
-            BorderRuleTypes.BorderConstant => BorderTypes.Constant,
-            BorderRuleTypes.BorderByUser => BorderTypes.Constant,
-            BorderRuleTypes.BorderReflect => BorderTypes.Reflect,
-            _ => BorderTypes.Constant
-        };
-
         // Obliczenie gradientów używając operatora Sobela
-        Cv2.Sobel(src, gradX, MatType.CV_32F, 1, 0, 3, borderType: borderTypeCV);
-        Cv2.Sobel(src, gradY, MatType.CV_32F, 0, 1, 3, borderType: borderTypeCV);
+        Cv2.Sobel(src, gradX, MatType.CV_32F, 1, 0, 3);
+        Cv2.Sobel(src, gradY, MatType.CV_32F, 0, 1, 3);
 
         // Obliczenie magnitude gradientu
         var magnitude = new Mat();
