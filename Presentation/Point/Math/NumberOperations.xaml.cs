@@ -4,7 +4,7 @@ using System.Windows;
 using System.Windows.Input;
 using Algorithms.Point;
 
-namespace Presentation;
+namespace Presentation.Point.Math;
 
 public partial class NumberOperations : Window
 {
@@ -50,7 +50,9 @@ public partial class NumberOperations : Window
     {
         if (int.TryParse(NumericInput.Text, out var numericValue))
         {
-            var recodingTable = MathOperations.Number.Add((byte)numericValue);
+            var maxValue = Image.GetMaxPixelValue();
+            var saturate = Saturate.IsChecked == true;
+            var recodingTable = MathOperations.Number.Add((byte)numericValue, saturate, maxValue);
             Image = Image.Recode(recodingTable);
             Close();
         }

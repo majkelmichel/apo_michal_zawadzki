@@ -43,6 +43,7 @@
                 <MenuItem Header="Otsu threshold" Click="OtsuThreshold"></MenuItem>
                 <MenuItem Header="Adaptive threshold" Click="AdaptiveThreshold"></MenuItem>
                 <MenuItem Header="Morphology" Click="MorphologyOperations"></MenuItem>
+                <MenuItem Header="Inpaint" Click="Inpaint"></MenuItem>
             </MenuItem>
         </Menu>
         <Image x:Name="PreviewImage" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" />

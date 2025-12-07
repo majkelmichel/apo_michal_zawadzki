@@ -101,4 +101,18 @@ public static class BitmapExtensions
 
         return bitmap;
     }
+    
+    public static int GetMaxPixelValue(this Bitmap bitmap) 
+    {
+        var max = 0;
+        for (var y = 0; y < bitmap.Height; y++)
+        {
+            for (var x = 0; x < bitmap.Width; x++)
+            {
+                if (bitmap.GetPixel(x, y).B > max) max = bitmap.GetPixel(x, y).B;
+            }
+        }
+
+        return max;
+    }
 }

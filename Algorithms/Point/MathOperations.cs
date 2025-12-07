@@ -55,8 +55,14 @@ public class MathOperations
     public static class Number
     {
         // Lab 2 Zad 1
-        public static byte[] Add(byte value)
+        public static byte[] Add(byte value, bool saturate = false, int maxValueInImage = 0)
         {
+            if (!saturate)
+            {
+                var dividend = 1;
+                if (value + maxValueInImage > 255) dividend = (value + maxValueInImage) / 255 + 1;
+                return Enumerable.Range(0, 256).Select(i => (byte)Math.Min(255, i + value / dividend)).ToArray();
+            }
             return Enumerable.Range(0, 256).Select(i => (byte)Math.Min(255, i + value)).ToArray();
         }
 

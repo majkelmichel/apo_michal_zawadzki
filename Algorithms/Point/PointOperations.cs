@@ -5,7 +5,7 @@ using OpenCvSharp.Extensions;
 
 namespace Algorithms.Point;
 
-public class PointOperations
+public static class PointOperations
 {
     public static Bitmap ReduceGrayLevels(Bitmap bitmap, byte grayLevels)
     {

@@ -186,7 +186,7 @@ public partial class ImageWindow
 
     private void NumberOperations(object sender, RoutedEventArgs e)
     {
-        var numberOperationsWindow = new NumberOperations(_windowModel.Image);
+        var numberOperationsWindow = new Point.Math.NumberOperations(_windowModel.Image);
         numberOperationsWindow.ShowDialog();
         
         _windowModel.Image = numberOperationsWindow.Image;
@@ -289,6 +289,15 @@ public partial class ImageWindow
         morphologyOperationsWindow.ShowDialog();
         
         _windowModel.Image = morphologyOperationsWindow.Image;
+        LoadImage();
+    }
+
+    private void Inpaint(object sender, RoutedEventArgs e)
+    {
+        var inpaintWindow = new InpaintWindow(_windowModel);
+        inpaintWindow.ShowDialog();
+        
+        _windowModel.Image = inpaintWindow.Image;
         LoadImage();
     }
 }

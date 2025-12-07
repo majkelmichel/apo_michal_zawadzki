@@ -1,0 +1,28 @@
+﻿<Window x:Class="Presentation.InpaintWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:Presentation"
+        mc:Ignorable="d"
+        Title="InpaintWindow" Height="450" Width="800" d:DataContext="{d:DesignInstance local:InpaintWindow}">
+    <StackPanel>
+        <ComboBox Name="SelectImage"
+                  Margin="10"
+                  ItemsSource="{Binding Windows}"
+                  Text="Mask image"
+                  IsEditable="True"
+                  SelectionChanged="SelectImage_OnSelectionChanged">
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Title}" />
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+        </ComboBox>
+        <Button Grid.Row="1" Name="SubmitButton"
+                Content="Submit"
+                Width="100"
+                Height="30"
+                Click="SubmitButton_Click" />
+    </StackPanel>
+</Window>
