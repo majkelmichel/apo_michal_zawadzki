@@ -239,12 +239,14 @@ public class NeighbourOperations
     {
         var mat = bitmap.ToMat();
 
+        var borderWidth = kernelSize / 2;
+
         var src = borderType switch
         {
-            BorderRuleTypes.BorderConstant => mat.CopyMakeBorder(1, 1, 1, 1, BorderTypes.Constant, Scalar.All(0)),
-            BorderRuleTypes.BorderByUser => mat.CopyMakeBorder(1, 1, 1, 1, BorderTypes.Constant,
+            BorderRuleTypes.BorderConstant => mat.CopyMakeBorder(borderWidth, borderWidth, borderWidth, borderWidth, BorderTypes.Constant, Scalar.All(0)),
+            BorderRuleTypes.BorderByUser => mat.CopyMakeBorder(borderWidth, borderWidth, borderWidth, borderWidth, BorderTypes.Constant,
                 Scalar.All(borderConstant)),
-            BorderRuleTypes.BorderReflect => mat.CopyMakeBorder(1, 1, 1, 1, BorderTypes.Reflect),
+            BorderRuleTypes.BorderReflect => mat.CopyMakeBorder(borderWidth, borderWidth, borderWidth, borderWidth, BorderTypes.Reflect),
             _ => throw new ArgumentOutOfRangeException(nameof(borderType), borderType, null)
         };
         
