@@ -8,6 +8,7 @@ using System.Windows.Media.Imaging;
 using Algorithms;
 using Algorithms.Point;
 using Microsoft.Win32;
+using Presentation.Analyze;
 using Presentation.Neighbour;
 using Presentation.Point;
 using Presentation.Point.Bool;
@@ -299,5 +300,11 @@ public partial class ImageWindow
         
         _windowModel.Image = inpaintWindow.Image;
         LoadImage();
+    }
+
+    private void ContourFeatures(object sender, RoutedEventArgs e)
+    {
+        var contourFeaturesWindow = new ContourFeaturesWindow(_windowModel.Image);
+        contourFeaturesWindow.Show();
     }
 }

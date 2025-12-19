@@ -17,6 +17,7 @@
             <MenuItem Header="_Analyze" x:Name="Menu">
                 <MenuItem Header="Calculate _LUT" Click="CalculateLut" />
                 <MenuItem Header="Show _Histogram" Click="ShowHistogram" />
+                <MenuItem Header="Contour Features" Click="ContourFeatures"></MenuItem>
             </MenuItem>
             <MenuItem Header="_Point">
                 <MenuItem Header="_Negation" Click="Negation" />

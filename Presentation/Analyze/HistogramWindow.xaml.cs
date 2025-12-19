@@ -10,7 +10,7 @@ using Color = System.Drawing.Color;
 using PixelFormat = System.Drawing.Imaging.PixelFormat;
 using Rectangle = System.Windows.Shapes.Rectangle;
 
-namespace Presentation;
+namespace Presentation.Analyze;
 
 public partial class HistogramWindow : Window
 {

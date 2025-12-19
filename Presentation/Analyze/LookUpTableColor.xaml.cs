@@ -1,6 +1,6 @@
 ﻿using System.Windows;
 
-namespace Presentation;
+namespace Presentation.Analyze;
 
 public partial class LookUpTableColor : Window
 {
