@@ -274,8 +274,10 @@ public partial class ImageWindow
 
     private void OtsuThreshold(object sender, RoutedEventArgs e)
     {
-        _windowModel.Image = PointOperations.OtsuThreshold(_windowModel.Image);
+        var result = PointOperations.OtsuThreshold(_windowModel.Image);
+        _windowModel.Image = result.Item1;
         LoadImage();
+        MessageBox.Show($"Threshold: {result.Item2}", "Otsu threshold", MessageBoxButton.OK, MessageBoxImage.Information);
     }
 
     private void AdaptiveThreshold(object sender, RoutedEventArgs e)

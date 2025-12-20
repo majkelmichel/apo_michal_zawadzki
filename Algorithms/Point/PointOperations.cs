@@ -104,13 +104,17 @@ public static class PointOperations
         return recodingTable;
     }
     
-    public static Bitmap OtsuThreshold(Bitmap bitmap)
+    public static Tuple<Bitmap, double> OtsuThreshold(Bitmap bitmap)
     {
         var mat = bitmap.ToMat();
 
+        var res = new Mat();
+        
+        var threshold = Cv2.Threshold(mat, res, 0, 255, ThresholdTypes.Otsu);
+
         var result = mat.Threshold(0, 255, ThresholdTypes.Otsu);
         
-        return result.ToBitmap();
+        return new Tuple<Bitmap, double>(result.ToBitmap(), threshold);
     }
 
     public static Bitmap AdaptiveThreshold(Bitmap bitmap)
