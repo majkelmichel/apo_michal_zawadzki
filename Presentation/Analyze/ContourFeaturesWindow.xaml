@@ -64,6 +64,5 @@
             <TextBlock Grid.Column="0">Equivalent diameter: </TextBlock>
             <TextBlock Grid.Column="1" x:Name="EquivalentDiameter"> </TextBlock>
         </Grid>
-        <Button Margin="10" Click="SaveButtonClick">Save to CSV</Button>
     </StackPanel>
 </Window>
