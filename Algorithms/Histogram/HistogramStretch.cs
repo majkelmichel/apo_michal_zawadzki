@@ -96,6 +96,8 @@ public static class HistogramStretch
         var empiricDistribution = new double[256];
         
         prefixSum[0] = frequencies[0];
+        empiricDistribution[0] = frequencies[0] / (double)totalPixels;
+        
         for (var i = 1; i < frequencies.Length; i++)
         {
             prefixSum[i] = frequencies[i] + prefixSum[i - 1];
@@ -108,7 +110,7 @@ public static class HistogramStretch
 
         for (var i = 0; i < 256; i++)
         {
-            recodingTable[i] = (byte)((empiricDistribution[i] - d0 / (1 - d0)) * 255);
+            recodingTable[i] = (byte)(((empiricDistribution[i] - d0) / (1 - d0)) * 255);
         }
         
         return recodingTable;
