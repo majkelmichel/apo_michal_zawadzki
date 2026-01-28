@@ -10,7 +10,7 @@
         <DockPanel>
             <Menu DockPanel.Dock="Top">
                 <MenuItem Header="_File">
-                    <MenuItem Header="_OpenImage" Click="OnOpenImage" InputGestureText="Ctrl+O" />
+                    <MenuItem Header="_Open Image" Click="OnOpenImage" InputGestureText="Ctrl+O" />
                     <!-- <MenuItem Header="_Exit" Click="OnExit"></MenuItem> -->
                 </MenuItem>
             </Menu>

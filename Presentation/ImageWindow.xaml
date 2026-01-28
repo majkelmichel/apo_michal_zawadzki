@@ -14,7 +14,7 @@
                 <MenuItem Header="_Resize to original" Click="ResizeToOriginal" />
                 <MenuItem Header="Convert to grayscale" Click="ConvertToGrayscale" />
             </MenuItem>
-            <MenuItem Header="_Analyze" x:Name="Menu">
+            <MenuItem Header="_Analyze">
                 <MenuItem Header="Calculate _LUT" Click="CalculateLut" />
                 <MenuItem Header="Show _Histogram" Click="ShowHistogram" />
                 <MenuItem Header="Contour Features" Click="ContourFeatures"></MenuItem>
@@ -22,14 +22,20 @@
             <MenuItem Header="_Point">
                 <MenuItem Header="_Negation" Click="Negation" />
                 <MenuItem Header="_Reduce gray levels" Click="ReduceGrayLevels" />
-                <MenuItem Header="_Binary Threshold" Click="BinaryThreshold" />
-                <MenuItem Header="_Grayscale Threshold" Click="GrayscaleThreshold" />
+                <MenuItem Header="Thresholds">
+                    <MenuItem Header="_Binary Threshold" Click="BinaryThreshold" />
+                    <MenuItem Header="_Grayscale Threshold" Click="GrayscaleThreshold" />
+                    <MenuItem Header="Double threshold" Click="DoubleThreshold"></MenuItem>
+                    <MenuItem Header="Otsu threshold" Click="OtsuThreshold"></MenuItem>
+                    <MenuItem Header="Adaptive threshold" Click="AdaptiveThreshold"></MenuItem>
+                </MenuItem>
                 <MenuItem Header="_Math">
                     <MenuItem Header="_Add images" Click="AddImages"></MenuItem>
                     <MenuItem Header="Subtract images" Click="SubtractImages"></MenuItem>
                     <MenuItem Header="Number operations" Click="NumberOperations"></MenuItem>
                 </MenuItem>
                 <MenuItem Header="Bool operations" Click="BoolOperations" />
+                <MenuItem Header="Histogram stretch by values" Click="HistogramStretch" />
             </MenuItem>
             <MenuItem Header="Neighbour operations">
                 <MenuItem Header="Blur operations" Click="BlurOperations" />
@@ -38,14 +44,8 @@
                 <MenuItem Header="Median blur" Click="MedianBlur" />
                 <MenuItem Header="Canny Edge Detection" Click="CannyEdgeDetection" />
             </MenuItem>
-            <MenuItem Header="Lab3">
-                <MenuItem Header="Histogram stretch by values" Click="HistogramStretch" />
-                <MenuItem Header="Double threshold" Click="DoubleThreshold"></MenuItem>
-                <MenuItem Header="Otsu threshold" Click="OtsuThreshold"></MenuItem>
-                <MenuItem Header="Adaptive threshold" Click="AdaptiveThreshold"></MenuItem>
-                <MenuItem Header="Morphology" Click="MorphologyOperations"></MenuItem>
-                <MenuItem Header="Inpaint" Click="Inpaint"></MenuItem>
-            </MenuItem>
+            <MenuItem Header="Morphology" Click="MorphologyOperations"></MenuItem>
+            <MenuItem Header="Inpaint" Click="Inpaint"></MenuItem>
         </Menu>
         <Image x:Name="PreviewImage" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" />
     </DockPanel>

@@ -23,7 +23,7 @@ public partial class MorphologyOperationsWindow : Window
     
     private void Dilate(object sender, RoutedEventArgs e)
     {
-        Image = MorphologyOperations.Erode(Image, (StructuringElements)StructuringElementSelect.SelectedIndex);
+        Image = MorphologyOperations.Dilate(Image, (StructuringElements)StructuringElementSelect.SelectedIndex);
         Close();
     }
 
