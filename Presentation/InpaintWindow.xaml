@@ -5,7 +5,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:Presentation"
         mc:Ignorable="d"
-        Title="InpaintWindow" Height="450" Width="800" d:DataContext="{d:DesignInstance local:InpaintWindow}">
+        Title="InpaintWindow" Height="450" Width="800" 
+        d:DataContext="{d:DesignInstance local:InpaintWindow}">
     <StackPanel>
         <ComboBox Name="SelectImage"
                   Margin="10"

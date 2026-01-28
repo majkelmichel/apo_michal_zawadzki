@@ -22,7 +22,8 @@ public partial class SubtractImages : Window
         InitializeComponent();
         _windows = WindowManager.GetInstance().GetWindows();
         Windows = _windows
-            .Where(w => w.Id != currentWindow.Id).ToArray()
+            .Where(w => w.Id != currentWindow.Id) // exclude the original image window
+            .Where(w => w.Width == currentWindow.Width && w.Height == currentWindow.Height) // include only images with the same size as the original image
             .Select((w, i) => new WindowViewmodel
             {
                 Index = i,

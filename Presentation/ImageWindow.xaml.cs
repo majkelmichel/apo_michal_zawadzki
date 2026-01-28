@@ -40,7 +40,7 @@ public partial class ImageWindow
         try
         {
             using var memory = new MemoryStream();
-            _windowModel.Image.Save(memory, ImageFormat.Png);
+            _windowModel.Image.Save(memory, ImageFormat.Bmp);
             memory.Position = 0;
 
             var bitmapImage = new BitmapImage();
@@ -308,5 +308,14 @@ public partial class ImageWindow
     {
         var contourFeaturesWindow = new ContourFeaturesWindow(_windowModel.Image);
         contourFeaturesWindow.Show();
+    }
+
+    private void ImageInterpenetration(object sender, RoutedEventArgs e)
+    {
+        var imageInterpenetrationWindow = new ImageInterpenetrationWindow(_windowModel);
+        imageInterpenetrationWindow.ShowDialog();
+        
+        _windowModel.Image = imageInterpenetrationWindow.Image;
+        LoadImage();
     }
 }

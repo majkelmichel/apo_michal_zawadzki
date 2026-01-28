@@ -46,6 +46,7 @@
             </MenuItem>
             <MenuItem Header="Morphology" Click="MorphologyOperations"></MenuItem>
             <MenuItem Header="Inpaint" Click="Inpaint"></MenuItem>
+            <MenuItem Header="Image Interpenetration" Click="ImageInterpenetration" />
         </Menu>
         <Image x:Name="PreviewImage" Stretch="Uniform" HorizontalAlignment="Left" VerticalAlignment="Top" />
     </DockPanel>

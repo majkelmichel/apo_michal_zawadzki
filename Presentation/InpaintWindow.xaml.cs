@@ -12,15 +12,15 @@ public partial class InpaintWindow : Window
     public IEnumerable<WindowViewmodel> Windows { get; init; }
     private readonly ManagedWindow[] _windows;
     public Bitmap Image { get; private set;  }
-    private ManagedWindow _currentWindow;
-    private WindowViewmodel _selectedWindow;
+    private WindowViewmodel? _selectedWindow;
 
     public InpaintWindow(ManagedWindow currentWindow)
     {
         InitializeComponent();
         _windows = WindowManager.GetInstance().GetWindows();
         Windows = _windows
-            .Where(w => w.Id != currentWindow.Id).ToArray()
+            .Where(w => w.Id != currentWindow.Id) // exclude the original image window
+            .Where(w => w.Width == currentWindow.Width && w.Height == currentWindow.Height) // include only images with the same size as the original image
             .Select((w, i) => new WindowViewmodel
             {
                 Index = i,
@@ -28,12 +28,17 @@ public partial class InpaintWindow : Window
                 Id = w.Id
             });
         DataContext = this;
-        _currentWindow = currentWindow;
+        Image = currentWindow.Image;
     }
     
     private void SubmitButton_Click(object sender, RoutedEventArgs e)
     {
-        Image = Inpainting.Inpaint(_currentWindow.Image, _windows.First(w => w.Id == _selectedWindow.Id).Image);
+        if (_selectedWindow is null)
+        {
+            MessageBox.Show("Please select a window with image to inpaint with.");
+            return;
+        }
+        Image = Inpainting.Inpaint(Image, _windows.First(w => w.Id == _selectedWindow.Id).Image);
         Close();
     }
     
