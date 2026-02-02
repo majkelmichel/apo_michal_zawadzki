@@ -34,7 +34,7 @@
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
                 <TextBlock Grid.Column="0" HorizontalAlignment="Center">Original</TextBlock>
-                <Slider Grid.Column="1" Maximum="16" TickPlacement="BottomRight" TickFrequency="1"
+                <Slider Name="SliderValue" Grid.Column="1" TickPlacement="BottomRight" TickFrequency="1"
                         ValueChanged="SliderValueChanged" IsSnapToTickEnabled="True" />
                 <TextBlock Grid.Column="2" HorizontalAlignment="Center">Selected image</TextBlock>
             </Grid>

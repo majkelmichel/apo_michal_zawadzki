@@ -1,19 +1,22 @@
 ﻿using System.Drawing;
-using Algorithms.Point;
 
 namespace Algorithms;
 
 public static class ImageInterpenetration
 {
+    public const double Ratio = 16.0;
     public static Bitmap Interpenetrate(Bitmap original, Bitmap second, byte ratio)
     {
+        if (ratio > Ratio) throw new ArgumentException($"Ratio cannot be greater than {Ratio}");
+        if (!ColorDepth.IsGrayscale(original) || !ColorDepth.IsGrayscale(second)) throw new ArgumentException("Images must be grayscale");
+        
         var width = original.Width;
         var height = original.Height;
         
         var result = new Bitmap(width, height);
         
-        var secondImageOpacity = ratio / 16.0;
-        var originalImageOpacity = (16.0 - ratio) / 16.0;
+        var secondImageOpacity = ratio / Ratio;
+        var originalImageOpacity = (Ratio - ratio) / Ratio;
         
         for (var y = 0; y < width; y++)
         {

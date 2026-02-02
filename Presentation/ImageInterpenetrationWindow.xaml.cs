@@ -35,8 +35,11 @@ public partial class ImageInterpenetrationWindow : Window
         _originalImageWindow = originalImageWindow;
         Image = originalImageWindow.Image;
         
+        SliderValue.Maximum = ImageInterpenetration.Ratio; // set the maximum value of the slider
+        // calculate window height based on the original image height
         Height = originalImageWindow.Height + 180;
         
+        // load the original image into the preview
         using var memory = new MemoryStream();
         Image.Save(memory, ImageFormat.Bmp);
         memory.Position = 0;
@@ -56,7 +59,17 @@ public partial class ImageInterpenetrationWindow : Window
             MessageBox.Show("Please select a window with image to interpenetrate with.");
             return;
         }
-        Image = ImageInterpenetration.Interpenetrate(_originalImageWindow.Image, _windows.First(w => w.Id == _selectedWindow.Id).Image, _sliderValue);
+
+        try
+        {
+            Image = ImageInterpenetration.Interpenetrate(_originalImageWindow.Image,
+                _windows.First(w => w.Id == _selectedWindow.Id).Image, _sliderValue)
+                .ToGrayscale();
+        }
+        catch (ArgumentException ex)
+        {
+            MessageBox.Show(ex.Message);
+        }
         Close();
     }
     
@@ -65,6 +78,7 @@ public partial class ImageInterpenetrationWindow : Window
         if (SelectImage.SelectedItem is not WindowViewmodel selected) return;
         _selectedWindow = selected;
         
+        // load the selected image into the preview
         using var memory = new MemoryStream();
         _windows.First(w => w.Id == _selectedWindow.Id).Image.Save(memory, ImageFormat.Bmp);
         memory.Position = 0;
@@ -87,8 +101,8 @@ public partial class ImageInterpenetrationWindow : Window
 
     private void UpdatePreview()
     {
-        // For performance reasons we are not calculating the result every time we want to update the preview.
-        SecondImage.Opacity = _sliderValue / 16.0;
-        OriginalImage.Opacity = (16.0 - _sliderValue) / 16.0;
+        // for performance reasons we are not calculating the result every time we want to update the preview.
+        SecondImage.Opacity = _sliderValue / ImageInterpenetration.Ratio;
+        OriginalImage.Opacity = (ImageInterpenetration.Ratio - _sliderValue) / ImageInterpenetration.Ratio;
     }
 }
